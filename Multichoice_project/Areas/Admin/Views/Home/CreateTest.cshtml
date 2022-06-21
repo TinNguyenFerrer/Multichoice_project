@@ -1,0 +1,307 @@
+﻿@using Multichoice_project.Models;
+@{
+    ViewData["Title"] = "CreateTest";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["UserLogin"] = "Tín";
+    ViewData["UserLoginFirst"] = "T";
+    var sub = (List<Subject>)ViewData["Subject"];
+}
+
+
+<div class="row">
+    <div class="col-8 py-6 col-12 FormCreateTest " style="">
+        <div class="card mb-3 mb-md-4">
+            <div class=" " style="min-height:100%">
+                <button type="button" class="btn btn-primary btn-sm fixedAddQuestion AddQuestion">
+                    <i class="fa-solid fa-plus"></i>
+                    &nbsp; New Quesion
+                </button>
+                <button type="button" onclick="submitTest()" class="btn btn-sm fixedSaveTest">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    &nbsp; Save
+                </button>
+                <div class="properties-test">
+                    <label class="d-block fw-bolder" for="name-test"> Name Test:</label>
+                    <input type="text" class="form-control name-test" id="name-test">
+                    <span class="fw-bolder">Time: </span>
+                    <input type="number" class="form-control time">
+                    <span>(Minutes)</span>
+                    <br />
+                    <label class="fw-bolder d-inline-block" for="subject"> Subject Name:</label>
+                    <select class="form-select col-3 ms-3 my-2 d-inline-block subject" id=" subject" aria-label="Default select example">
+                        @foreach (var s in sub)
+                        {
+                            <option value="@s.Id">@s.Name</option>
+                        }
+
+
+                    </select>
+
+                    <label class="d-block fw-bolder" for="Description"> Description:</label>
+                    <textarea class="form-control description" aria-label="With textarea" id="Description"></textarea>
+                </div>
+                <br />
+                <div class="text-start px-5 test-content">
+
+                    @*<p class=" question-content">
+                    <b class="fs-5">Câu 1</b><br />
+                    bạn madasdas
+                    </p>
+                    <div class="answer-content px-5">
+                    <input class='form-check-input' type="radio" name="" />
+                    <label class='form-check-label opacity-100'>Câu trả lời 1</label>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 py-4 sticket" style="padding:0px ">
+        <div class="card FormEditQues " style="">
+
+            @*<div class="text-center" style="min-height:100px">
+            <b>Question</b>
+            <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
+            <b> Answer </b>
+            <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
+            </div>*@
+
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var formEditQuesIstActive = false
+        var idQuest = 0
+        $(".AddQuestion").on("click", function() {
+            addQues();
+        })
+
+        // ---------------function -------------
+        // hiển thị form tạo câu hỏi
+        function addQues(action = '') {
+
+            if (action == 'Exit') {
+                var id = "#admin-create-test-" + (idQuest)
+                console.log((id))
+                $(id).remove()
+                idQuest--
+            }
+            if (formEditQuesIstActive) {
+                $(".FormCreateTest").addClass("col-12")
+                $(".FormEditQues").empty()
+                formEditQuesIstActive = false
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+            } else {
+                $(".FormCreateTest").removeClass("col-12")
+                $(".FormEditQues").append(`
+                                                                                                                <div class="text-center TrasitionForm" style="min-height:100px;background-color:#c2c2c2;">
+                                                                                                                    <b>Question</b>
+                                                                                                                    <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
+                                                                                                                    <button onclick="addAnswerToTest()" type="button" class="btn btn-success btn-sm position-absolute start-0 save-answer">Add</button>
+                                                                                                                    <b> Answer </b>
+                                                                                                                    <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
+                                                                                                                </div>
+                                                                                                                <div class="menubut d-flex TrasitionForm">
+                                                                                                                    <button onclick="addQues()" type="button" class="btn btn-primary btn-sm px-4 me-auto ms-0 AddQuestion">Save Question</button>
+                                                                                                                    <button onclick="addQues('Exit')" type="button" class="btn btn-danger btn-sm px-4  AddQuestion">Exit</button>
+                                                                                                                </div>
+                                                                                                             `)
+                formTest()
+                formEditQuesIstActive = true
+                handleAddSampleQuestion()
+                idQuest++
+            }
+        }
+        //tạo CKEditor
+        function formTest() {
+            var editorQuestion = CKEDITOR.replace('EditorQuestion', {
+                width: "100%",
+                height: 70
+            });
+            var editorAnswer = CKEDITOR.replace('EditorAnswer', {
+                width: "100%",
+                height: 180
+            });
+            editorQuestion.on("change", function(event) {
+                var questionAdded = CKEDITOR.instances.EditorQuestion.getData()
+                //console.log(questionAdded)
+                handleDisplayQues(questionAdded)
+
+            })
+            editorAnswer.on("change", function(event) {
+                var answerAdded = CKEDITOR.instances.EditorAnswer.getData()
+                //console.log(answerAdded)
+                //console.log("chạy")
+                handleDisplayAnswer(answerAdded)
+
+            })
+        }
+        //Hiển thị câu hỏi ngoài giao diện
+        function handleDisplayQues(questionContent) {
+            $(`#admin-create-test-${idQuest}`).find(".question-content").empty()
+            $(`#admin-create-test-${idQuest}`).find(".question-content").append(questionContent)
+        }
+        //Hiển thị các câu trả lời ngoài giao diện
+        function handleDisplayAnswer(answerContent) {
+            if (answerContent !== '') {
+
+                var html = `<input class='form-check-input' type="radio" name="${idQuest + 1}" />
+                                                                                              <label class='form-check-label opacity-100'>${answerContent}</label><br>`
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").append(html)
+            } else {
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+            }
+
+        }
+        function handleAddSampleQuestion() {
+            var classAdded = `<div id="admin-create-test-${idQuest + 1}">
+                                                                                                            <b class="fs-5">Câu ${idQuest + 1}</b>
+                                                                                                            <p class=" question-content" ">
+                                                                                                                Câu hỏi ?
+                                                                                                            </p>
+                                                                                                            <div class="answer-content px-5"></div>
+                                                                                                                <div class="answer-content-temp px-5">
+                                                                                                                    <input class='form-check-input' type="radio" name="1" />
+                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 1</label><br>
+                                                                                                                    <input class='form-check-input' type="radio" name="2" />
+                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 2</label><br>
+                                                                                                                    <input class='form-check-input' type="radio" name="3" />
+                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 3</label><br>
+                                                                                                                    <input class='form-check-input' type="radio" name="4" />
+                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 4</label><br>
+                                                                                                                </div>
+                                                                                                      </div>`
+            $(".test-content").append(classAdded)
+
+        }
+        function addAnswerToTest() {
+            var answer = CKEDITOR.instances.EditorAnswer.getData()
+            var html = `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))"><input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
+                                                                                              <label class='form-check-label opacity-100'>${answer}</label>
+                                                                                              <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style ="color:#ef5b5b"></i>
+                                                                                              <br>
+                                                                                              </div>`
+            $(`#admin-create-test-${idQuest}`).find(".answer-content").append(html)
+            CKEDITOR.instances.EditorAnswer.setData('')
+        }
+        function deleteAnswerFocus(ans) {
+            ans.find("i").removeClass("d-none")
+        }
+        function deleteAnswerUnFocus(ans) {
+            ans.find("i").addClass("d-none")
+        }
+        function deleteAnswer(ansIcon) {
+            //var question = ansIcon.parent().parent().find(".groupAnswer")
+            ansIcon.parent().remove()
+            //console.log("roogn:" + idQuest)
+            //console.log(t)
+            //console.log("lenht:" + t.length)
+            //nếu xóa hêt Answer sẽ xóa câu đó đi
+            //console.log(ansIcon.parent().parent().find(".groupAnswer"))
+            console.log($(`#admin-create-test-${idQuest}`).find(".answer-content").children())
+            if ($(`#admin-create-test-${idQuest}`).find(".answer-content").children().length == 0) {
+                $(`#admin-create-test-${idQuest}`).remove()
+                console.log("lenht:")
+                //giảm số câu hỏi đang có xuống 1
+                idQuest--
+                //đóng form tạo câu hỏi
+                if (formEditQuesIstActive) {
+                    $(".FormCreateTest").addClass("col-12")
+                    $(".FormEditQues").empty()
+                    formEditQuesIstActive = false
+                    $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+                }
+
+            }
+        }
+        function submitTest() {
+            var testName = $(".properties-test").find(".name-test").val()
+            var time = $(".properties-test").find(".time").val()
+            var description = $(".properties-test").find(".description").val()
+            var subject = $(".subject").val()
+            if (testName == "" || time == "" || description == "" || subject == "") {
+                //var myModal = new bootstrap.Modal(document.getElementById('error-info-test'))
+                //myModal.show()
+                $("#error-info-test").modal("show")
+            } else {
+                console.log("testName: " + testName)
+                console.log("time: " + time)
+                console.log("description: " + description)
+                console.log("----------------------------")
+                var test = []
+
+                for (var i = 1; i <= idQuest; i++) {
+                    console.log("I:" + i)
+                    var quesI = $(`#admin-create-test-${i}`).find(".question-content").html()
+                    var answI = []
+                    var rightAnswer = 1
+                    $("#admin-create-test-" + i).find("input[type='radio']").each(function() {
+
+
+                        if ($(this).is(":checked")) {
+                            rightAnswer = answI.push($(this).val()) - 1
+                            console.log("right : " + rightAnswer)
+                        } else {
+                            answI.push($(this).val()) - 1
+                        }
+                    })
+                    console.log(answI)
+                    console.log(quesI)
+                    var quesAnsw = {
+                        question: quesI,
+                        answer: answI,
+                        rightAnswer: rightAnswer
+                    }
+                    test.push(quesAnsw)
+                }
+
+                var jsonTest = JSON.stringify({
+                    name: testName,
+                    time: time,
+                    description: description,
+                    subjectid: subject,
+                    listQues: test
+                })
+                console.log("--------")
+                console.log(jsonTest)
+                $.ajax({
+                    url: "/Admin/Home/SaveTest",
+                    data: jsonTest,
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "Application/json;charset=utf-8",
+                    success: function(res) {
+                        console.log(res)
+                    }
+                })
+
+
+            }//end else
+        }
+    </script>
+
+    @*--------------modal           *@
+    <div class="modal fade" id="error-info-test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Lỗi! Kiểm tra lại thông tin bài test
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*-------------end -modal   *@
+    }
+
+
+
+

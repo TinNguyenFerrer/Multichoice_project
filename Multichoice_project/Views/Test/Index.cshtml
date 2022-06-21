@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var test = (List<Test>)ViewBag.Model;
+}
+
+@foreach (var t in test)
+{
+    <div class="card margin-top15">
+        <a href="/Test/TestName/@t.Link" class=" stretched-link"></a>
+        <div class="card-body">
+            <h5 class="card-title blue_title">@t.Name</h5>
+            @t.Description
+        </div>
+    </div>
+}

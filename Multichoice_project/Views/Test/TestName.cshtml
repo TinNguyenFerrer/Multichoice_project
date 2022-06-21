@@ -1,0 +1,106 @@
+﻿@using Multichoice_project.Models;
+@{
+    ViewData["Title"] = "TestName";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var u = ViewBag.Model;
+    Int32 i = 1;
+}
+
+<h1>@u.Name</h1>
+<i class="fas fa-alarm-clock"></i>
+<h5> @u.Time phút</h5>
+<div class="container px-4 border rounded ">
+
+    @foreach (Question question in ViewBag.question)
+    {
+        <div>
+            <lable class=" fs-5 question" IdQuestion="@question.Id"><b>Câu @i:</b>@question.Content</lable>
+            <script type="text/javascript">
+                var t =" @question.Content.ToString()";
+                document.getElementsByClassName("question").innerHTML=t
+            </script>
+            @{
+                i = i + 1;
+            }
+            <div class="form-check @question.Id" IdQuestion="@question.Id" disable>
+            </div>
+            <div class="incorrect_answer d-none">
+                <i class="fa-solid fa-xmark fa-lg "></i>
+                Sai
+            </div>
+            <div class="right_answer text-primary d-none">
+                <i class="fa-solid fa-thumbs-up fa-lg"></i>
+                Đúng
+            </div>
+        </div>
+        <hr width="100%" align="center" />
+    }
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        $(".form-check").each(async function() {
+            var th = $(this)
+            //var input = th.find(".form-check-input")
+            //var label = th.find(".form-check-label")
+            var idquestion = $(this).attr("IdQuestion")
+            console.log("id question ------" + idquestion)
+            await $.ajax({
+                url: "/Test/GetAnswer",
+                type: 'get',
+                data: {
+                    idquestion: $(this).attr("IdQuestion")
+                },
+                success: function(data) {
+
+                    console.log(data.answerslist.$values);
+                    var charcode = 65
+                    $.each(data.answerslist.$values, function(index, value) {
+                        console.log("thêm " + value.answer)
+                        console.log("id question ------" + idquestion)
+                        var input = "<input class='form-check-input ' onchange='OnSelectAnswer($(this)," + value.idanswer + ")' type='radio' name='" + th.attr("IdQuestion") + "' id='" + value.idanswer + "'/>"
+                        var label = "<label class='form-check-label opacity-100' for='" + value.idanswer + "'>" + String.fromCharCode(charcode) + ". " + `<div style="display: inline-block">${value.answer}</div>` + "</label><br><br>"
+                        charcode++
+                        console.log("input" + input)
+                        console.log("lable" + label)
+                        th.append(input)
+                        th.append(label)
+                    })
+                }
+            })
+
+        })
+
+
+        //------------------function-----------------
+        function OnSelectAnswer(idques, idanswer) {
+            var idquestion = idques.parent().attr("IdQuestion")
+
+            console.log(idquestion)
+            var CorrectAnswer
+            $.ajax({
+                url: "/Test/GetCorrectAnswer",
+                data: {
+                    idquestion: idquestion
+                },
+                success: function(data) {
+                    CorrectAnswer = data.answerslist.$values[0].idanswer
+                    console.log(CorrectAnswer == idanswer)
+                    if (CorrectAnswer == idanswer) {
+                        idques.parent().parent().find(".right_answer").removeClass("d-none")
+                    } else {
+                        idques.parent().parent().find(".incorrect_answer").removeClass("d-none")
+                        idques.parent().parent().append("Đáp án là: " + "<b class='fs-5'>" + idques.parent().find("#" + CorrectAnswer).next().text()[0] + "</b>")
+                    }
+                    idques.parent().find("input").attr('disabled', 'disabled')
+
+
+                }
+            })
+
+
+        }
+
+    </script>
+}
