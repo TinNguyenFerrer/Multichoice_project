@@ -5,9 +5,9 @@ using Multichoice_project.Repositories;
 
 namespace Multichoice_project.Persistence.Repositories
 {
-    public class AnswerRepositories : Repositories<Answer>, IAnswerRepositories
+    public class QuestionTypeRepositories : Repositories<QuestionType>, IQuestionTypeRepositories
     {
-        public AnswerRepositories(Multichoise_DBContext dbContext) : base(dbContext)
+        public QuestionTypeRepositories(Multichoise_DBContext dbContext) : base(dbContext)
         {
         }
     }

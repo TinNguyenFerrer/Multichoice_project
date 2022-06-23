@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Multichoice_project.Models;
 namespace Multichoice_project.Repositories
 {
     public interface IRepositories<T> where T : class
     {
         DbSet<T> Dbset { get; }
-        DbContext DbContext { get; set; }
+        Multichoise_DBContext DbContext { get; set; }
 
         IEnumerable<T> GetAll();
         T GetByID(int id);

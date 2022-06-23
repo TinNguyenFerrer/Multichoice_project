@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Multichoice_project.Models;
 namespace Multichoice_project.Repositories
 {
     public class Repositories<T> : IRepositories<T> where T : class
@@ -15,8 +16,8 @@ namespace Multichoice_project.Repositories
             }
         }
 
-        public DbContext DbContext { get; set; }
-        public Repositories(DbContext dbContext)
+        public Multichoise_DBContext DbContext { get; set; }
+        public Repositories(Multichoise_DBContext dbContext)
         {
             DbContext = dbContext;
         }

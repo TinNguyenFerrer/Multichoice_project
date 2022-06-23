@@ -1,8 +1,9 @@
 ﻿using Multichoice_project.Models;
+using Multichoice_project.Repositories;
 
 namespace Multichoice_project.Core.Repositories
 {
-    public interface IAnswerRepositories : IQuestionRepositories<Answer>
+    public interface IAnswerRepositories : IRepositories<Answer>
     {
     }
 }
