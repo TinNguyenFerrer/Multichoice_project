@@ -55,7 +55,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
                 test.Description = t["description"].ToString();
                 test.SubjectId = Int32.Parse(t["subjectid"].ToString());
                 test.Hits = 0;
-                test.Link = RemoveVietnameseTone(t["name"].ToString() + String.Format("{0:MM/yy/dd}", DateTime.Now).Replace("/", "")).Replace(" ", "");
+                test.Link = RemoveVietnameseTone(t["name"].ToString() +"-"+ String.Format("{0:d/M/hhyymmss}", DateTime.Now).Replace("/", "")).Replace(" ", "");
                 test.CreatedTime = DateTime.Now;
                 test.UserId = 1;
                 foreach (var Lques in t["listQues"].AsArray()) {
@@ -81,6 +81,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
                 
             //Console.WriteLine(t?.GetProperty("listQues"));
             
+        }
+        public IActionResult AllTest()
+        {
+            ViewBag.Test = _unitOfWork.TestRepository.GetAll().ToList();
+
+            return View();
         }
         public string RemoveVietnameseTone(string text)
         {

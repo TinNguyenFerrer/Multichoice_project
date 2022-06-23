@@ -1,9 +1,11 @@
 ﻿@using Multichoice_project.Models;
+@using System.Web
 @{
     ViewData["Title"] = "TestName";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var u = ViewBag.Model;
     Int32 i = 1;
+    
 }
 
 <h1>@u.Name</h1>
@@ -14,10 +16,15 @@
     @foreach (Question question in ViewBag.question)
     {
         <div>
-            <lable class=" fs-5 question" IdQuestion="@question.Id"><b>Câu @i:</b>@question.Content</lable>
+            <lable class=" fs-5 question" IdQuestion="@question.Id"><b>Câu @i:</b><div class="d-inline-block px-2" id="@question.Id-idforques"></div></lable>
             <script type="text/javascript">
-                var t =" @question.Content.ToString()";
-                document.getElementsByClassName("question").innerHTML=t
+                var t = '@question.Content'
+                var parser = new DOMParser;
+                var dom = parser.parseFromString('<!doctype html><body>' + t,'text/html');
+                var decodedString = dom.body.textContent;
+                document.getElementById("@question.Id-idforques").innerHTML=decodedString
+                console.log( decodedString);
+                
             </script>
             @{
                 i = i + 1;
@@ -38,6 +45,7 @@
 </div>
 
 @section Scripts{
+        ádasd
 
     <script type="text/javascript">
         $(".form-check").each(async function() {

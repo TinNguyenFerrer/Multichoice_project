@@ -2,8 +2,15 @@
 @{
     ViewData["Title"] = "CreateTest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //tên user
     ViewData["UserLogin"] = "Tín";
     ViewData["UserLoginFirst"] = "T";
+
+    ViewData["Test-active"]="active";
+    ViewData["Test-add-new"]="active";
+    ViewData["Nav-open-test"] = "side-nav-opened";
+    ViewData["Display-submenu-test"] = "display: block";
+
     var sub = (List<Subject>)ViewData["Subject"];
 }
 

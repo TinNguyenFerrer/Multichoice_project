@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Multichoice_project.f;
 using Multichoice_project.Models;
 using Multichoice_project.Repositories;
 using System.Linq;
@@ -9,11 +8,11 @@ namespace Multichoice_project.Controllers
     public class TestController : Controller
     {
         UnitOfWork _UnitOfwork;
-        SAnswerRepositories answerrepositories;
+        
         public TestController(Multichoise_DBContext dbcontext)
         {
             _UnitOfwork = new UnitOfWork(dbcontext);
-            answerrepositories = new SAnswerRepositories(dbcontext);
+            
         }
         public IActionResult Index()
         {
