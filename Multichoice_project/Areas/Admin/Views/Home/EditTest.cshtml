@@ -69,18 +69,18 @@
                     @*<b class="fs-5">Câu X</b>
                     <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>
                     <p class=" question-content" ">
-                        Câu hỏi?
+                    Câu hỏi?
                     </p>
 
                     <div class="answer-content px-5">
-                        <div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))">
-                            <input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
-                            <label class='form-check-label opacity-100'>Câu hỏi 1</label>
-                            <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style="color:#ef5b5b"></i>
-                            <br>
-                        </div>
+                    <div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))">
+                    <input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
+                    <label class='form-check-label opacity-100'>Câu hỏi 1</label>
+                    <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style="color:#ef5b5b"></i>
+                    <br>
                     </div>
-*@
+                    </div>
+                    *@
                 </div>
             </div>
         </div>
@@ -101,369 +101,424 @@
 </div>
 </div>
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
 
 
-    var formEditQuesIstActive = false //from để thêm sửa câu hỏi đã active hay chưa
-    var idQuest = 0 // số lượng câu hỏi -1
-    var questionEditing
-    var idquesDelete = []//danh sách id câu hỏi cần delete
+        var formEditQuesIstActive = false //from để thêm sửa câu hỏi đã active hay chưa
+        var idQuest = 0 // số lượng câu hỏi -1
+        var questionEditing
+        var idquesDelete = []//danh sách id câu hỏi cần delete
+        var idAnsDelete = []//danh sách câu trả lời delete
 
-    $(".AddQuestion").on("click", function() {
-        addQues();
-    })
-    //-----------lấy nội dung test--------------
-    $.ajax({
-        url: '/Admin/Home/GetQuestionsByIdTest/' + @ViewBag.Test.Id,
-        dataType: 'json',
-        type: 'GET',
-        success: function(data) {
-            
-            data.questionlist.$values.forEach(function(i) {
-                console.log(i)
-                var htmlAnswer=``
-                var htmlQuestion = `<b class="fs-5">Câu ${idQuest+1}: </b>
-                                    <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>`+
-                                    "<div class='question-content tt' id='"+i.id+"'>"
-                                    +i.content+
-                                    "</div>"
-                i.answers.$values.forEach(function(ans) {
-                    var checked = ''
-                    console.log(ans.isCorrectAnswer)
-                    if (ans.isCorrectAnswer) checked = "checked"
-                     htmlAnswer += `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))">
-                            <input class='form-check-input' type="radio" name="${i.id}" ${checked} value="${ans.content}" id="${ans.id}" />
-                            <label class='form-check-label opacity-100'>${ans.content}</label>
-                            <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style="color:#ef5b5b"></i>
-                            <br>
-                        </div>` 
-                })
-                htmlQues_Ans = `<div id="admin-create-test-${idQuest + 1}">
-                                    ${htmlQuestion}
-                                    <div class="answer-content px-5">
-                                        ${htmlAnswer}
-                                    </div>
-                                    <div class="answer-content-temp px-5"></div>
+        $(".AddQuestion").on("click", function() {
+            addQues();
+        })
+        //-----------lấy nội dung test--------------
+        $.ajax({
+            url: '/Admin/Home/GetQuestionsByIdTest/' + @ViewBag.Test.Id,
+            dataType: 'json',
+            type: 'GET',
+            success: function(data) {
+
+                data.questionlist.$values.forEach(function(i) {
+                    console.log(i)
+                    var htmlAnswer = ``
+                    var htmlQuestion = `<b class="fs-5">Câu ${idQuest + 1}: </b>
+                                            <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>`+
+                        "<div class='question-content tt' id='" + i.id + "'>"
+                        + i.content +
+                        "</div>"
+                    i.answers.$values.forEach(function(ans) {
+                        var checked = ''
+                        console.log(ans.isCorrectAnswer)
+                        if (ans.isCorrectAnswer) checked = "checked"
+                        htmlAnswer += `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))">
+                                    <input class='form-check-input' type="radio" name="${i.id}" ${checked} value="${ans.content}" id="${ans.id}" />
+                                    <label class='form-check-label opacity-100'>${ans.content}</label>
+                                    <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style="color:#ef5b5b"></i>
+                                    <br>
                                 </div>`
-                $(".test-content").append(htmlQues_Ans)
-                idQuest++
-            })
-            //for(var ques in data.questionlist.$values){
-            //    console.log(ques)
-            //}
+                    })
+                    htmlQues_Ans = `<div id="admin-create-test-${idQuest + 1}" class="admin-create-test-all">
+                                            ${htmlQuestion}
+                                            <div class="answer-content px-5">
+                                                ${htmlAnswer}
+                                            </div>
+                                            <div class="answer-content-temp px-5"></div>
+                                        </div>`
+                    $(".test-content").append(htmlQues_Ans)
+                    idQuest++
+                })
+                //for(var ques in data.questionlist.$values){
+                //    console.log(ques)
+                //}
 
-        }
-    })
-
-    // ---------------function -------------
-    // hiển thị form tạo câu hỏi
-    function addQues(action = '') {
-
-        if (action == 'Exit') {
-            var id = "#admin-create-test-" + (idQuest)
-            console.log((id))
-            $(id).remove()
-            idQuest--
-        }
-        if (formEditQuesIstActive) {
-            $(".FormCreateTest").addClass("col-12")
-            $(".FormEditQues").empty()
-            formEditQuesIstActive = false
-            $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
-        } else {
-            $(".FormCreateTest").removeClass("col-12")
-            $(".FormEditQues").append(`
-                                                                                                                                                <div class="text-center TrasitionForm" style="min-height:100px;background-color:#c2c2c2;">
-                                                                                                                                                    <b>Question</b>
-                                                                                                                                                    <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
-                                                                                                                                                    <button onclick="addAnswerToTest()" type="button" class="btn btn-success btn-sm position-absolute start-0 save-answer">Add</button>
-                                                                                                                                                    <b> Answer </b>
-                                                                                                                                                    <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="menubut d-flex TrasitionForm">
-                                                                                                                                                    <button onclick="addQues()" type="button" class="btn btn-primary btn-sm px-4 me-auto ms-0 AddQuestion">Save Question</button>
-                                                                                                                                                    <button onclick="addQues('Exit')" type="button" class="btn btn-danger btn-sm px-4  AddQuestion">Exit</button>
-                                                                                                                                                </div>
-                                                                                                                                             `)
-            formTest()
-            formEditQuesIstActive = true
-            handleAddSampleQuestion()
-            idQuest++
-        }
-    }
-    //tạo CKEditor
-    function formTest() {
-        var editorQuestion = CKEDITOR.replace('EditorQuestion', {
-            width: "100%",
-            height: 70
-        });
-        var editorAnswer = CKEDITOR.replace('EditorAnswer', {
-            width: "100%",
-            height: 180
-        });
-        editorQuestion.on("change", function(event) {
-            var questionAdded = CKEDITOR.instances.EditorQuestion.getData()
-            //console.log(questionAdded)
-            handleDisplayQues(questionAdded)
-
+            }
         })
-        editorAnswer.on("change", function(event) {
-            var answerAdded = CKEDITOR.instances.EditorAnswer.getData()
-            //console.log(answerAdded)
-            //console.log("chạy")
-            handleDisplayAnswer(answerAdded)
 
-        })
-    }
-    //Hiển thị câu hỏi ngoài giao diện
-    function handleDisplayQues(questionContent) {
-        $(`#admin-create-test-${idQuest}`).find(".question-content").empty()
-        $(`#admin-create-test-${idQuest}`).find(".question-content").append(questionContent)
-    }
-    //Hiển thị các câu trả lời ngoài giao diện
-    function handleDisplayAnswer(answerContent) {
-        if (answerContent !== '') {
-
-            var html = `<input class='form-check-input' type="radio" name="${idQuest + 1}" />
-                                                                                                                              <label class='form-check-label opacity-100'>${answerContent}</label><br>`
-            $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
-            $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").append(html)
-        } else {
-            $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+        // ---------------function -------------
+        function addQuesEdit() {
+            
+                $(".FormCreateTest").addClass("col-12")
+                $(".FormEditQues").empty()
+                formEditQuesIstActive = false
+                questionEditing.find(".answer-content-temp").empty()
+            
         }
+        // hiển thị form tạo câu hỏi
+        function addQues(action = '') {
 
-    }
-    function handleAddSampleQuestion() {
-        var classAdded = `<div id="admin-create-test-${idQuest + 1}">
-                                                                                                                                            <b class="fs-5">Câu ${idQuest + 1}</b>
-                                                                                                                                            <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>
-                                                                                                                                            <p class=" question-content" ">
-                                                                                                                                                Câu hỏi ?
-                                                                                                                                            </p>
-                                                                                                                                            <div class="answer-content px-5"></div>
-                                                                                                                                                <div class="answer-content-temp px-5">
-                                                                                                                                                    <input class='form-check-input' type="radio" name="1" />
-                                                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 1</label><br>
-                                                                                                                                                    <input class='form-check-input' type="radio" name="2" />
-                                                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 2</label><br>
-                                                                                                                                                    <input class='form-check-input' type="radio" name="3" />
-                                                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 3</label><br>
-                                                                                                                                                    <input class='form-check-input' type="radio" name="4" />
-                                                                                                                                                    <label class='form-check-label opacity-100'>Câu trả lời 4</label><br>
-                                                                                                                                                </div>
-                                                                                                                                      </div>`
-        $(".test-content").append(classAdded)
-
-    }
-    function addAnswerToTest() {
-        var answer = CKEDITOR.instances.EditorAnswer.getData()
-        var html = `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))"><input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
-                                                                                                                              <label class='form-check-label opacity-100'>${answer}</label>
-                                                                                                                              <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style ="color:#ef5b5b"></i>
-                                                                                                                              <br>
-                                                                                                                              </div>`
-        $(`#admin-create-test-${idQuest}`).find(".answer-content").append(html)
-        CKEDITOR.instances.EditorAnswer.setData('')
-    }
-     // Hiển thị Icon delete khi mất hover
-    function deleteAnswerFocus(ans) {
-        ans.find("i").removeClass("d-none")
-    }
-    // Ẩn Icon delete khi mất hover
-    function deleteAnswerUnFocus(ans) {
-        ans.find("i").addClass("d-none")
-    }
-    //xóa câu trả lời thông qua onclick iconDelete<red>
-    function deleteAnswer(ansIcon) {
-        var questionTest = ansIcon.parent().parent().parent()
-        ansIcon.parent().find("")
-        ansIcon.parent().remove()
-        //console.log("roogn:" + idQuest)
-        //console.log(t)
-        //console.log("lenht:" + t.length)
-        //nếu xóa hêt Answer sẽ xóa câu đó đi
-        //console.log(ansIcon.parent().parent().find(".groupAnswer"))
-        console.log(questionTest)
-        //nếu xóa hết câu trả mời thì đồng thời xóa câu hỏi
-        if (questionTest.find(".answer-content").children().length == 0) {
-            //lấy id câu hỏi sẽ xóa
-            var idquesDe = questionTest.find(".question-content ").attr("id")
-            console.log("id câu hỏi đã xóa: "+idquesDe)
-            idquesDelete.push( +idquesDe )
-            questionTest.remove()
-            console.log("lenht:"+idQuest)
-            //giảm số câu hỏi đang có xuống 1
-            idQuest--
-            //đóng form tạo câu hỏi
+            if (action == 'Exit') {
+                var id = "#admin-create-test-" + (idQuest)
+                console.log((id))
+                $(id).remove()
+                idQuest--
+            }
             if (formEditQuesIstActive) {
                 $(".FormCreateTest").addClass("col-12")
                 $(".FormEditQues").empty()
                 formEditQuesIstActive = false
                 $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+            } else {
+                $(".FormCreateTest").removeClass("col-12")
+                $(".FormEditQues").append(`
+                                                                                                                                                        <div class="text-center TrasitionForm" style="min-height:100px;background-color:#c2c2c2;">
+                                                                                                                                                            <b>Question</b>
+                                                                                                                                                            <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
+                                                                                                                                                            <button onclick="addAnswerToTest()" type="button" class="btn btn-success btn-sm position-absolute start-0 save-answer">Add</button>
+                                                                                                                                                            <b> Answer </b>
+                                                                                                                                                            <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="menubut d-flex TrasitionForm">
+                                                                                                                                                            <button onclick="addQues()" type="button" class="btn btn-primary btn-sm px-4 me-auto ms-0 AddQuestion">Save Question</button>
+                                                                                                                                                            <button onclick="addQues('Exit')" type="button" class="btn btn-danger btn-sm px-4  AddQuestion">Exit</button>
+                                                                                                                                                        </div>
+                                                                                                                                                     `)
+                formTest()
+                formEditQuesIstActive = true
+                handleAddSampleQuestion()
+                idQuest++
+            }
+        }
+        //tạo CKEditor
+        function formTest() {
+            var editorQuestion = CKEDITOR.replace('EditorQuestion', {
+                width: "100%",
+                height: 70
+            });
+            var editorAnswer = CKEDITOR.replace('EditorAnswer', {
+                width: "100%",
+                height: 180
+            });
+            editorQuestion.on("change", function(event) {
+                var questionAdded = CKEDITOR.instances.EditorQuestion.getData()
+                //console.log(questionAdded)
+                handleDisplayQues(questionAdded)
+
+            })
+            editorAnswer.on("change", function(event) {
+                var answerAdded = CKEDITOR.instances.EditorAnswer.getData()
+                //console.log(answerAdded)
+                //console.log("chạy")
+                handleDisplayAnswer(answerAdded)
+
+            })
+        }
+        //Hiển thị câu hỏi ngoài giao diện
+        function handleDisplayQues(questionContent) {
+            $(`#admin-create-test-${idQuest}`).find(".question-content").empty()
+            $(`#admin-create-test-${idQuest}`).find(".question-content").append(questionContent)
+        }
+        //Hiển thị các câu trả lời ngoài giao diện
+        function handleDisplayAnswer(answerContent) {
+            if (answerContent !== '') {
+
+                var html = `<input class='form-check-input' type="radio" name="${idQuest + 1}" />
+                                                                                                                                      <label class='form-check-label opacity-100'>${answerContent}</label><br>`
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").append(html)
+            } else {
+                $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
             }
 
         }
-    }
-    async function submitTest() {
-        var testName = $(".properties-test").find(".name-test").val().trim()
-        var time = $(".properties-test").find(".time").val().trim()
-        var description = $(".properties-test").find(".description").val().trim()
-        var subject = $(".subject").val().trim()
-        if (testName == "" || time == "" || description == "" || subject == "") {
-            //var myModal = new bootstrap.Modal(document.getElementById('error-info-test'))
-            //myModal.show()
-            $("#error-info-test").modal("show")
-        } else {
-            console.log("testName: " + testName)
-            console.log("time: " + time)
-            console.log("description: " + description)
-            console.log("----------------------------")
-            var test = []
+        function handleAddSampleQuestion() {
+            var classAdded = `<div id="admin-create-test-${idQuest + 1}" class="admin-create-test-all">
+                                                                                                                                                    <b class="fs-5">Câu ${idQuest + 1}</b>
+                                                                                                                                                    <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>
+                                                                                                                                                    <p class=" question-content" ">
+                                                                                                                                                        Câu hỏi ?
+                                                                                                                                                    </p>
+                                                                                                                                                    <div class="answer-content px-5"></div>
+                                                                                                                                                        <div class="answer-content-temp px-5">
+                                                                                                                                                            <input class='form-check-input' type="radio" name="1" />
+                                                                                                                                                            <label class='form-check-label opacity-100'>Câu trả lời 1</label><br>
+                                                                                                                                                            <input class='form-check-input' type="radio" name="2" />
+                                                                                                                                                            <label class='form-check-label opacity-100'>Câu trả lời 2</label><br>
+                                                                                                                                                            <input class='form-check-input' type="radio" name="3" />
+                                                                                                                                                            <label class='form-check-label opacity-100'>Câu trả lời 3</label><br>
+                                                                                                                                                            <input class='form-check-input' type="radio" name="4" />
+                                                                                                                                                            <label class='form-check-label opacity-100'>Câu trả lời 4</label><br>
+                                                                                                                                                        </div>
+                                                                                                                                              </div>`
+            $(".test-content").append(classAdded)
 
-            for (var i = 1; i <= idQuest; i++) {
-                console.log("I:" + i)
-                var quesI = $(`#admin-create-test-${i}`).find(".question-content").html()
-                var idQues = $(`#admin-create-test-${i}`).find(".question-content").attr("id")
-                var answI = []
-                var rightAnswer = 1
-                $("#admin-create-test-" + i).find("input[type='radio']").each(function() {
+        }
+        function addAnswerToTest() {
+            var answer = CKEDITOR.instances.EditorAnswer.getData()
+            var html = `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))"><input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
+                                                                                                                                      <label class='form-check-label opacity-100'>${answer}</label>
+                                                                                                                                      <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style ="color:#ef5b5b"></i>
+                                                                                                                                      <br>
+                                                                                                                                      </div>`
+            $(`#admin-create-test-${idQuest}`).find(".answer-content").append(html)
+            CKEDITOR.instances.EditorAnswer.setData('')
+        }
+        // Hiển thị Icon delete khi mất hover
+        function deleteAnswerFocus(ans) {
+            ans.find("i").removeClass("d-none")
+        }
+        // Ẩn Icon delete khi mất hover
+        function deleteAnswerUnFocus(ans) {
+            ans.find("i").addClass("d-none")
+        }
+        //xóa câu trả lời thông qua onclick iconDelete<red>
+        function deleteAnswer(ansIcon) {
+            var questionTest = ansIcon.parent().parent().parent()
+            idAnsDelete.push(ansIcon.parent().find("input").attr("id"))
+            ansIcon.parent().remove()
+            //console.log("roogn:" + idQuest)
+            //console.log(t)
+            //console.log("lenht:" + t.length)
+            //nếu xóa hêt Answer sẽ xóa câu đó đi
+            //console.log(ansIcon.parent().parent().find(".groupAnswer"))
+            console.log(questionTest)
+            //nếu xóa hết câu trả mời thì đồng thời xóa câu hỏi
+            if (questionTest.find(".answer-content").children().length == 0) {
+                //lấy id câu hỏi sẽ xóa
+                var idquesDe = questionTest.find(".question-content ").attr("id")
+                if (idquesDe != undefined) {
+                    idquesDelete.push(+idquesDe)
+                }
+                console.log("list id câu hỏi đã xóa: ")
+                console.log(idquesDelete)
+                questionTest.remove()
+                console.log("lenht:" + idQuest)
+                //giảm số câu hỏi đang có xuống 1
+                //idQuest--
+                //đóng form tạo câu hỏi
+                if (formEditQuesIstActive) {
+                    $(".FormCreateTest").addClass("col-12")
+                    $(".FormEditQues").empty()
+                    formEditQuesIstActive = false
+                    $(`#admin-create-test-${idQuest}`).find(".answer-content-temp").empty()
+                }
 
+            }
+        }
+        async function submitTest() {
+            var thisQues = $(this)
+            var stop = true
+            var testName = $(".properties-test").find(".name-test").val().trim()
+            var time = $(".properties-test").find(".time").val().trim()
+            var description = $(".properties-test").find(".description").val().trim()
+            var subject = $(".subject").val().trim()
+            if (testName == "" || time == "" || description == "" || subject == "") {
+                //var myModal = new bootstrap.Modal(document.getElementById('error-info-test'))
+                //myModal.show()
+                $("#error-info-test").modal("show")
+            } else {
+                console.log("testName: " + testName)
+                console.log("time: " + time)
+                console.log("description: " + description)
+                console.log("----------------------------")
+                var test = []
 
-                    if ($(this).is(":checked")) {
-                        rightAnswer = answI.push($(this).val()) - 1
-                        console.log("right : " + rightAnswer)
-                    } else {
-                        answI.push($(this).val()) - 1
+                
+                $(".admin-create-test-all").each(function (){
+                    var quesI = $(this).find(".question-content").html()
+                    console.log("------------------------------------ư-------------------------")
+                    var idQues = $(this).find(".question-content").attr("id")
+                    if (quesI == "") {
+                        alert("chưa có câu hỏi tại câu "+$(this).find("B").first().text())
+                        var stop = false
                     }
+                    var answI = []
+                    var rightAnswer = -1
+                    $(this).find("input[type='radio']").each(function() {
+                        var an = {
+                                content : $(this).val(),
+                                id      : $(this).attr('id') ||""
+                            }
+                        if ($(this).is(":checked")) {
+                            rightAnswer = answI.push(an) - 1
+                        } else if (an.content=="") { 
+                            console.log(an)
+                            alert("câu hỏi "+thisQues.find("b").text()+" đáp án chưa đúng")
+                        }else{
+                            answI.push(an)
+                        }
+                    })
+                    if (rightAnswer == -1) {
+                        alert("Chưa check đáp án "+$(this).find("b").text())
+                        stop = false;
+                    }
+                    console.log(answI)
+                    console.log(quesI)
+                    var quesAnsw = {
+                        question: quesI,
+                        idquestion: idQues || "",
+                        answer: answI,
+                        rightAnswer: rightAnswer
+                    }
+                    test.push(quesAnsw)
                 })
-                console.log(answI)
-                console.log(quesI)
-                var quesAnsw = {
-                    question: quesI,
-                    idquestion: idQues||"",
-                    answer: answI,
-                    rightAnswer: rightAnswer
+
+                var jsonTest = JSON.stringify({
+                    id: @ViewBag.Test.Id,
+                    name: testName,
+                    time: time,
+                    description: description,
+                    subjectid: subject,
+                    listQues: test
+                })
+                console.log("----jsonTest----")
+                console.log(jsonTest)
+                console.log("----idquesDelete----")
+                console.log(idquesDelete)
+                console.log(JSON.stringify({ listidques: idquesDelete }),)
+                if (stop) {
+                    $.ajax({
+                        url: "/Admin/Home/EditTest",
+                        data: jsonTest,
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "Application/json;charset=utf-8",
+                        success: function(res) {
+                            console.log("Update ListIdQuestion success")
+                            console.log()
+                        }
+                    })
+                    $.ajax({
+                        url: "/Admin/Home/DeleteListIdQuestion",
+                        data: JSON.stringify({ listidques: idquesDelete }),
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "Application/json;charset=utf-8",
+                        success: function(res) {
+                            console.log("DeleteListIdQuestion success")
+                            console.log(res)
+                        }
+                    })
+                    $.ajax({
+                        url: "/Admin/Home/DeleteListIdAnswer",
+                        data: JSON.stringify({ listidans: idAnsDelete }),
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "Application/json;charset=utf-8",
+                        success: function(res) {
+                            console.log("DeleteListId Answer success-------")
+                            console.log(res)
+                        }
+                    })
                 }
-                test.push(quesAnsw)
+                await console.log("----------------------------xong --------------------")
+
+
+
+            }//end else
+        }
+
+        function formTestForEdit(questionEdited) {
+            var editorQuestion = CKEDITOR.replace('EditorQuestion', {
+                width: "100%",
+                height: 70
+            });
+            var editorAnswer = CKEDITOR.replace('EditorAnswer', {
+                width: "100%",
+                height: 180
+            });
+            editorQuestion.on("change", function(event) {
+                var questionAdded = CKEDITOR.instances.EditorQuestion.getData()
+                //console.log(questionAdded)
+                questionEdited.find(".question-content").empty()
+                questionEdited.find(".question-content").append(questionAdded)
+
+            })
+            editorAnswer.on("change", function(event) {
+                var answerAdded = CKEDITOR.instances.EditorAnswer.getData()
+                //console.log(answerAdded)
+                //console.log("chạy")
+                var html = `<input class='form-check-input' type="radio" name="${idQuest + 1}" />
+                                                                                                                                      <label class='form-check-label opacity-100'>${answerAdded}</label><br>`
+                questionEdited.find(".answer-content-temp").empty()
+                questionEdited.find(".answer-content-temp").append(html)
+
+            })
+        }
+        function addAnswerForEdit() {
+            var answer = CKEDITOR.instances.EditorAnswer.getData()
+            var html = `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))"><input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
+                                                                                                                                      <label class='form-check-label opacity-100'>${answer}</label>
+                                                                                                                                      <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style ="color:#ef5b5b"></i>
+                                                                                                                                      <br>
+                                                                                                                                      </div>`
+            questionEditing.find(".answer-content").append(html)
+            CKEDITOR.instances.EditorAnswer.setData('')
+            questionEditing.find(".answer-content-temp").empty()
+            console.log("------------------------hjhjhj----------------------------------")
+            console.log(questionEditing.find(".answer-content-temp"))
+        }
+
+        function editQuestion(questionEdited) {
+            if (formEditQuesIstActive) {
+                $(".FormCreateTest").addClass("col-12")
+                $(".FormEditQues").empty()
+
             }
+            {
+                $(".FormCreateTest").removeClass("col-12")
+                $(".FormEditQues").append(`
+                                                                                                                                                        <div class="text-center TrasitionForm" style="min-height:100px;background-color:#c2c2c2;">
+                                                                                                                                                            <b>Question</b>
+                                                                                                                                                            <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
+                                                                                                                                                            <button onclick="addAnswerForEdit()" type="button" class="btn btn-success btn-sm position-absolute start-0 save-answer">Add</button>
+                                                                                                                                                            <b> Answer </b>
+                                                                                                                                                            <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="menubut d-flex TrasitionForm">
+                                                                                                                                                            <button onclick="addQuesEdit()" type="button" class="btn btn-primary btn-sm px-4 me-auto ms-0 AddQuestion">OK</button>
 
-            var jsonTest = JSON.stringify({
-                id:@ViewBag.Test.Id,
-                name: testName,
-                time: time,
-                description: description,
-                subjectid: subject,
-                listQues: test
-            })
-            console.log("----jsonTest----")
-            console.log(jsonTest)
-            console.log("----idquesDelete----")
-            console.log(idquesDelete)
-            await $.ajax({
-                url: "/Admin/Home/EditTest",
-                data: jsonTest,
-                type: "POST",
-                dataType: "json",
-                contentType: "Application/json;charset=utf-8",
-                success: function(res) {
-                    console.log(res)
-                }
-            })
+                                                                                                                                                        </div>
+                                                                                                                                                     `)
+                questionEditing = questionEdited
+                //tạo CKEDITOR
+                formTestForEdit(questionEdited)
+                CKEDITOR.instances.EditorQuestion.setData(questionEdited.find(".question-content").html())
+                formEditQuesIstActive = true
+                //handleAddSampleQuestion()
 
-
-        }//end else
-    }
-
-    function formTestForEdit(questionEdited) {
-        var editorQuestion = CKEDITOR.replace('EditorQuestion', {
-            width: "100%",
-            height: 70
-        });
-        var editorAnswer = CKEDITOR.replace('EditorAnswer', {
-            width: "100%",
-            height: 180
-        });
-        editorQuestion.on("change", function(event) {
-            var questionAdded = CKEDITOR.instances.EditorQuestion.getData()
-            //console.log(questionAdded)
-            questionEdited.find(".question-content").empty()
-            questionEdited.find(".question-content").append(questionAdded)
-
-        })
-        editorAnswer.on("change", function(event) {
-            var answerAdded = CKEDITOR.instances.EditorAnswer.getData()
-            //console.log(answerAdded)
-            //console.log("chạy")
-            var html = `<input class='form-check-input' type="radio" name="${idQuest + 1}" />
-                                                                                                                              <label class='form-check-label opacity-100'>${answerAdded}</label><br>`
-            questionEdited.find(".answer-content-temp").empty()
-            questionEdited.find(".answer-content-temp").append(html)
-
-        })
-    }
-    function addAnswerForEdit() {
-        var answer = CKEDITOR.instances.EditorAnswer.getData()
-        var html = `<div class="groupAnswer" onmouseover="deleteAnswerFocus($(this))" onmouseout="deleteAnswerUnFocus($(this))"><input class='form-check-input' type="radio" name="${idQuest + 1}" value="${answer}" />
-                                                                                                                              <label class='form-check-label opacity-100'>${answer}</label>
-                                                                                                                              <i onclick='deleteAnswer($(this))' class="fas fa-trash ms-5 fa-lg d-none delete-answer" style ="color:#ef5b5b"></i>
-                                                                                                                              <br>
-                                                                                                                              </div>`
-        questionEditing.find(".answer-content").append(html)
-        CKEDITOR.instances.EditorAnswer.setData('')
-        questionEditing.find(".answer-content-temp").empty()
-        console.log("------------------------hjhjhj----------------------------------")
-        console.log(questionEditing.find(".answer-content-temp"))
-    }
-
-    function editQuestion(questionEdited) {
-        if (formEditQuesIstActive) {
-            $(".FormCreateTest").addClass("col-12")
-            $(".FormEditQues").empty()
-
+            }
         }
-        {
-            $(".FormCreateTest").removeClass("col-12")
-            $(".FormEditQues").append(`
-                                                                                                                                                <div class="text-center TrasitionForm" style="min-height:100px;background-color:#c2c2c2;">
-                                                                                                                                                    <b>Question</b>
-                                                                                                                                                    <textarea name="question" id="EditorQuestion" rows="10" cols="6"></textarea>
-                                                                                                                                                    <button onclick="addAnswerForEdit()" type="button" class="btn btn-success btn-sm position-absolute start-0 save-answer">Add</button>
-                                                                                                                                                    <b> Answer </b>
-                                                                                                                                                    <textarea name="answer" id="EditorAnswer" rows="12" cols="6"> </textarea>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="menubut d-flex TrasitionForm">
-                                                                                                                                                    <button onclick="addQues()" type="button" class="btn btn-primary btn-sm px-4 me-auto ms-0 AddQuestion">OK</button>
 
-                                                                                                                                                </div>
-                                                                                                                                             `)
-            questionEditing = questionEdited
-            //tạo CKEDITOR
-            formTestForEdit(questionEdited)
-            CKEDITOR.instances.EditorQuestion.setData(questionEdited.find(".question-content").html())
-            formEditQuesIstActive = true
-            //handleAddSampleQuestion()
-
-        }
-    }
-
-</script>
+    </script>
 
     @*--------------modal           *@
-<div class="modal fade" id="error-info-test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Lỗi! Kiểm tra lại thông tin bài test
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+    <div class="modal fade" id="error-info-test" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Lỗi! Kiểm tra lại thông tin bài test
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
     @*-------------end -modal   *@
     }

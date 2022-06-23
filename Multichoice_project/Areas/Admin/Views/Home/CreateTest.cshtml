@@ -168,7 +168,7 @@
 
         }
         function handleAddSampleQuestion() {
-            var classAdded = `<div id="admin-create-test-${idQuest + 1}">
+            var classAdded = `<div id="admin-create-test-${idQuest + 1}" class="admin-create-test-all">
                                                                                                                             <b class="fs-5">Câu ${idQuest + 1}</b>
                                                                                                                             <i class="fas fa-pen ps-3" style="color:#ffd43b" onclick="editQuestion($(this).parent())"></i>
                                                                                                                             <p class=" question-content" ">
@@ -219,7 +219,7 @@
                 question.remove()
                 console.log("lenht:")
                 //giảm số câu hỏi đang có xuống 1
-                idQuest--
+                //idQuest--
                 //đóng form tạo câu hỏi
                 if (formEditQuesIstActive) {
                     $(".FormCreateTest").addClass("col-12")
@@ -231,6 +231,7 @@
             }
         }
         function submitTest() {
+            var stop = true
             var testName = $(".properties-test").find(".name-test").val().trim()
             var time = $(".properties-test").find(".time").val().trim()
             var description = $(".properties-test").find(".description").val().trim()
@@ -246,21 +247,41 @@
                 console.log("----------------------------")
                 var test = []
 
-                for (var i = 1; i <= idQuest; i++) {
-                    console.log("I:" + i)
-                    var quesI = $(`#admin-create-test-${i}`).find(".question-content").html()
+                $(".admin-create-test-all").each(function (){
+                    var thisQues = $(this)
+                    var quesI = $(this).find(".question-content").html()
+                    if (quesI == "") {
+                        alert("chưa có câu hỏi tại câu "+$(this).find("B").first().text())
+                        var stop = false
+                    }
                     var answI = []
-                    var rightAnswer = 1
-                    $("#admin-create-test-" + i).find("input[type='radio']").each(function() {
-
-
+                    var rightAnswer = -1
+                    console.log("-----------oi")
+                        console.log($(this).find("input[type='radio']"))
+                    if ($(this).find("input[type='radio']")==undefined) { 
+                        console.log("-----------oi")
+                        console.log($(this).find("input[type='radio']"))
+                        stop = false;
+                        alert("câu hỏi "+$(this).find("b").text()+" chưa có đáp án")
+                    }
+                    $(this).find("input[type='radio']").each(function() {
+                        var an = {
+                                content : $(this).val()||"",
+                                id      : $(this).attr('id') ||""
+                            }
                         if ($(this).is(":checked")) {
-                            rightAnswer = answI.push($(this).val()) - 1
-                            console.log("right : " + rightAnswer)
-                        } else {
-                            answI.push($(this).val()) - 1
+                            rightAnswer = answI.push(an.content) - 1
+                        } else if (an.content=="") { 
+                            console.log(an)
+                            alert("câu hỏi "+thisQues.find("b").text()+" đáp án chưa đúng")
+                        }else{
+                            answI.push(an.content)
                         }
                     })
+                    if (rightAnswer == -1) {
+                        alert("Chưa check đáp án "+$(this).find("b").text())
+                        stop = false;
+                    }
                     console.log(answI)
                     console.log(quesI)
                     var quesAnsw = {
@@ -269,7 +290,7 @@
                         rightAnswer: rightAnswer
                     }
                     test.push(quesAnsw)
-                }
+                })
 
                 var jsonTest = JSON.stringify({
                     name: testName,
@@ -280,16 +301,18 @@
                 })
                 console.log("--------")
                 console.log(jsonTest)
-                $.ajax({
-                    url: "/Admin/Home/SaveTest",
-                    data: jsonTest,
-                    type: "POST",
-                    dataType: "json",
-                    contentType: "Application/json;charset=utf-8",
-                    success: function(res) {
-                        console.log(res)
-                    }
-                })
+                if (stop) {
+                    $.ajax({
+                        url: "/Admin/Home/SaveTest",
+                        data: jsonTest,
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "Application/json;charset=utf-8",
+                        success: function(res) {
+                            console.log(res)
+                        }
+                    })
+                }
 
 
             }//end else

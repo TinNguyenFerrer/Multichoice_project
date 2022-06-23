@@ -122,7 +122,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
             return Json(new { code = 200, Questionlist = ListQues.ToArray().DistinctBy(ques => ques.Id) });
         }
         [HttpPost]
-        public async void EditTests()
+        public async Task<JsonResult> EditTest()
         {
 
 
@@ -132,7 +132,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
                 body = await stream.ReadToEndAsync();
             }
 
-            
+
             //var t = JsonSerializer.Deserialize<dynamic>(body);
             //var t = JsonSerializer.Deserialize<object>(body) as JsonElement?;
             JsonObject t = JsonNode.Parse(body).AsObject();
@@ -155,21 +155,30 @@ namespace Multichoice_project.Areas.Admin.Controllers
             {
                 Question ques = new Question();
                 ques.Mark = 1;
+                ques.Content = Lques["question"].ToString();
+                Console.WriteLine("caau hoi: "+ ques.Content);
+                ques.QuestionTypeID = 1;
                 if (Lques["idquestion"].ToString() != "")
                 {
                     ques.Id = Int32.Parse(Lques["idquestion"].ToString());
+                    Console.WriteLine("id cau hoi: " + ques.Id);
+                    _unitOfWork.QuestionRepository.Update(ques);
                 }
-                ques.Content = Lques["question"].ToString();
-                ques.QuestionTypeID = 1;
                 ques.Answers = new List<Answer>();
                 var i = 0;
                 foreach (var answer in Lques["answer"].AsArray())
                 {
                     Answer ans = new Answer();
-                    ans.Content = answer.ToString();
+                    ans.Content = answer["content"].ToString();
+                    
                     if (i == Int32.Parse(Lques["rightAnswer"].ToString()))
                     {
                         ans.IsCorrectAnswer = true;
+                    }
+                    if (answer["id"].ToString() != "")
+                    {
+                        ans.Id = Int32.Parse(answer["id"].ToString());
+                        _unitOfWork.AnswerRepository.Update(ans);
                     }
                     ques.Answers.Add(ans);
                     i++;
@@ -178,7 +187,53 @@ namespace Multichoice_project.Areas.Admin.Controllers
             }
             _unitOfWork.TestRepository.Update(test);
             _unitOfWork.SaveChange();
+            return Json(new { code = 200 });
         }
+        [HttpPost]
+        public async Task<JsonResult> DeleteListIdQuestion()
+        {
+            Task<string> body;
+            using (StreamReader stream = new StreamReader(Request.Body))
+            {
+                 body =  stream.ReadToEndAsync();
+            }
+
+            JsonObject t = JsonNode.Parse(await body).AsObject();
+            Console.WriteLine("-------------------------list question delete---------------");
+            Console.WriteLine(t);
+            foreach(var idQ in t["listidques"].AsArray())
+            {
+                Console.WriteLine(Int32.Parse(idQ.ToString()));
+                _unitOfWork.QuestionRepository.Delete(Int32.Parse(idQ.ToString()));
+            }
+            _unitOfWork.SaveChange();
+            return  Json(new { code = 200 });
+            
+        }
+        public async Task<JsonResult> DeleteListIdAnswer()
+        {
+            Task<string> body;
+            using (StreamReader stream = new StreamReader(Request.Body))
+            {
+                body = stream.ReadToEndAsync();
+            }
+
+            JsonObject t = JsonNode.Parse(await body).AsObject();
+            Console.WriteLine("-------------------------list answer delete---------------");
+            Console.WriteLine(t);
+            foreach (var idQ in t["listidans"].AsArray())
+            {
+                Console.WriteLine(Int32.Parse(idQ.ToString()));
+                _unitOfWork.AnswerRepository.Delete(Int32.Parse(idQ.ToString()));
+            }
+            _unitOfWork.SaveChange();
+            return Json(new { code = 200 });
+
+        }
+        //public ViewResult DeleteTest()
+        //{
+        //    return Redirect()
+        //}
 
 
     }
