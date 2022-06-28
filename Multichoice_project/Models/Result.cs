@@ -8,7 +8,8 @@ namespace Multichoice_project.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
         public int Id { get; set; }
         [Required]
-        public string NumberOfCorrectAnswers { get; set; }
+        public int NumberOfCorrectAnswers { get; set; }
+        public int NumberQuestionOfTest { get; set; }
         public DateTime DateTime { get; set; }
         [ForeignKey("Test")]
         public int? TestId { get; set; }

@@ -156,7 +156,7 @@
                 <li class="sidebar-heading h6">Examples</li>
                 <!-- End Title -->
                 <!-- Users -->
-                <li class="side-nav-menu-item side-nav-has-menu">
+                <li class="side-nav-menu-item side-nav-has-menu @ViewData["User-active"] @ViewData["Nav-open-user"]">
                     <a class="side-nav-menu-link media align-items-center" href="#"
                        data-target="#subUsers">
                         <span class="side-nav-menu-icon d-flex mr-3">
@@ -170,12 +170,12 @@
                     </a>
 
                     <!-- Users: subUsers -->
-                    <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0">
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="users.html">All User</a>
+                    <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0" style="@ViewData["Display-submenu-user"]">
+                        <li class="side-nav-menu-item @ViewData["User-all"]">
+                            <a class="side-nav-menu-link" href="/Admin/Home/AllUser">All User</a>
                         </li>
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link" href="user-edit.html">Add New User</a>
+                        <li class="side-nav-menu-item  @ViewData["User-add-new"]">
+                            <a class="side-nav-menu-link" href="/Admin/Home/CreateUser">Add New User</a>
                         </li>
                     </ul>
                     <!-- End Users: subUsers -->
@@ -230,10 +230,10 @@
                     <!-- Pages: subSubject -->
                     <ul id="subSubject" class="side-nav-menu side-nav-menu-second-level mb-0 " style="@ViewData["Display-submenu-subject"]">
                         <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link @ViewData["Subject-all"]" href="AllTest">All Subjects</a>
+                            <a class="side-nav-menu-link @ViewData["Subject-all"]" href="/Admin/Home/AllSubject">All Subjects</a>
                         </li>
                         <li class="side-nav-menu-item @ViewData["Subject-add-new"]">
-                            <a class="side-nav-menu-link" href="/Admin/Home/Addsubject">Add New Subject</a>
+                            <a class="side-nav-menu-link" href="/Admin/Home/CreateSubject">Add New Subject</a>
                         </li>
                         
                     </ul>
@@ -242,16 +242,16 @@
                 <!-- End SUBJECT -->
 
 
-                <!-- Settings -->
-                <li class="side-nav-menu-item">
-                    <a class="side-nav-menu-link media align-items-center" href="settings.html">
+                <!-- Point -->
+                <li class="side-nav-menu-item @ViewData["Point-active"]">
+                    <a class="side-nav-menu-link media align-items-center" href="/Admin/Home/Point">
                         <span class="side-nav-menu-icon d-flex mr-3">
-                            <i class="gd-settings"></i>
+                            <i class="fas fa-award"></i>
                         </span>
-                        <span class="side-nav-fadeout-on-closed media-body">Settings</span>
+                        <span class="side-nav-fadeout-on-closed media-body">Point</span>
                     </a>
                 </li>
-                <!-- End Settings -->
+                <!-- End Point -->
                 <!-- Static -->
                 <li class="side-nav-menu-item">
                     <a class="side-nav-menu-link media align-items-center" href="static-non-auth.html">

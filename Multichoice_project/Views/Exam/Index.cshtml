@@ -1,0 +1,287 @@
+﻿@using Multichoice_project.Models;
+@using System.Web
+@{
+    ViewData["Title"] = "Exam";
+    Layout = "~/Views/Shared/_LayoutExam.cshtml";
+    var u = ViewBag.Model;
+    Int32 i = 1;
+
+}
+<div class="row">
+    <div class="col-8">
+        <h3>@u.Name</h3>
+    </div>
+    <div class="col-4">
+        <div class="point">
+            @* <h3> Điểm</h3>
+            <h5> 30/30</h5>*@
+        </div>
+    </div>
+</div>
+
+<h5> </h5>
+<div class="row">
+    <div class="col-8">
+        <div class="container px-4 border rounded width-auto list-ques">
+            @foreach (Question question in ViewBag.question)
+            {
+                <div id="question-@question.Id" class="question-exam" sentence-number="@i">
+                    <lable class=" fs-5 question" IdQuestion="@question.Id"><b>Câu @i:</b><div class="d-inline-block px-2" id="@question.Id-idforques"></div></lable>
+                    <script type="text/javascript">
+                        var t = '@question.Content'
+                        var parser = new DOMParser;
+                        var dom = parser.parseFromString('<!doctype html><body>' + t, 'text/html');
+                        var decodedString = dom.body.textContent;
+                        document.getElementById("@question.Id-idforques").innerHTML = decodedString
+                        //console.log(decodedString);
+
+                    </script>
+
+                    <div class="form-check @question.Id " IdQuestion="@question.Id" sentence-number="@i" disable>
+                    </div>
+                    <div class="incorrect_answer d-none">
+                        <i class="fas fa-times fa-lg"></i>
+                        Sai
+                    </div>
+                    <div class="right_answer text-primary d-none">
+                        <i class="fas fa-thumbs-up fa-lg"></i>
+                        Đúng
+                    </div>
+                </div>
+                <hr width="100%" align="center" />
+                i++;
+            }
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button onclick="submitAnswer(Warning = true)" class="btn btn-success submit-test" type="button">Submit</button>
+            </div>
+            <br />
+        </div>
+    </div>
+    <div class="number-container col-4">
+        <div class="test-question-header d-flex justify-content-between ">
+            <h5 class="d-inline-block" style="font-size: 20px;font-weight: 500">Danh sách câu hỏi</h5>
+            <div>
+                <i class="fas fa-clock fs-5 fa-clock-time" style="color:#005fff"></i>&nbsp
+                <div class="d-inline-block time-assignment fs-5 pe-3">@u.Time:23</div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between pb-2 total-point-header d-none">
+            <div class="d-block fs-4" style="font-size: 20px;font-weight: 500">
+                Số câu đúng
+            </div>
+            <div class="d-block fs-4">
+                <span>30</span>
+                /30
+            </div>
+            <br />
+        </div>
+        @*<h5>Danh sách câu hỏi</h5>*@
+
+        @{
+            i = 1;
+        }
+        @foreach (Question question in ViewBag.question)
+        {
+            <a class="number-item number-container-@i" href="#question-@question.Id"><span>@i</span></a>
+            i = i + 1;
+        }
+
+
+        @*<br />
+        <br />
+
+        <a class="number-item false" href="#87-idforques"><span>10</span></a>
+        <a class="number-item true" href="#87-idforques"><span>10</span></a>
+        <a class="number-item " href="#87-idforques"><span>10</span></a>
+        <a class="number-item answ-selected " href="#87-idforques"><span>10</span></a>*@
+
+    </div>
+    <div class="toast align-items-center text-white bg-danger border-0 position-fixed bottom-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" id="toad">
+        <div class="d-flex">
+            <div class="toast-body">
+                Cảnh báo! sắp hết giờ làm bài.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        var listAnswer = []
+        var myToastEl = $(".toast")
+        var myToast = new bootstrap.Toast(myToastEl)
+
+        //myToast.show()
+
+        var time = @u.Time-1
+        let counter = 59;
+        const intervalId = setInterval(() => {
+
+            counter -= 1;
+            $(".time-assignment").text(`${time}:${counter}`)
+            if (counter === 0) {
+                if (time == 0) {
+                    clearInterval(intervalId);
+                    $(".time-assignment").text("HẾT GIỜ")
+                    //submit
+                    submitAnswer(Warning = false)
+                    alert("Bài làm đã được nộp!")
+                }
+                if (time < 5) {
+                    $(".time-assignment").css({ "color": "red", "font-size": "150%" })
+                    $(".fa-clock-time").css({ "color": "red", "font-size": "150%" })
+                    if (time == 1) {
+                        myToast.show()
+                    }
+                }
+                counter = 60
+                time -= 1
+
+
+            }
+        }, 300);
+
+
+        //request lấy câu hỏi
+        $(".form-check").each(async function() {
+            var th = $(this)
+            //var input = th.find(".form-check-input")
+            //var label = th.find(".form-check-label")
+            var idquestion = $(this).attr("IdQuestion")
+            //console.log("id question ------" + idquestion)
+            await $.ajax({
+                url: "/Test/GetAnswer",
+                type: 'get',
+                data: {
+                    idquestion: $(this).attr("IdQuestion")
+                },
+                success: function(data) {
+
+
+                    var charcode = 65
+                    $.each(data.answerslist.$values, function(index, value) {
+                        //console.log("thêm " + value.answer)
+                        //console.log("id question ------" + idquestion)
+                        var input = "<input class='form-check-input input-answer ' onchange='OnSelectAnswer($(this)," + value.idanswer + ")' type='radio' name='" + th.attr("IdQuestion") + "' id='" + value.idanswer + "'/>"
+                        var label = "<label class='form-check-label opacity-100' for='" + value.idanswer + "'>" + String.fromCharCode(charcode) + ". " + `<div style="display: inline-block">${value.answer}</div>` + "</label><br>"
+                        charcode++
+
+                        th.append(input)
+                        th.append(label)
+                    })
+                }
+            })
+
+        })
+
+        //--------
+
+
+        //------------------function-----------------
+        function OnSelectAnswer(idques, idanswer) {
+            var sentence_number = idques.parent().attr("sentence-number") //lấy số thứ tự câu hỏi vừa tick đáp án
+            $(".number-container").find(`.number-container-${sentence_number}`).addClass("answ-selected")
+
+            //var idquestion = idques.parent().attr("IdQuestion")
+
+            //console.log(idquestion)
+            //var CorrectAnswer
+            //$.ajax({
+            //    url: "/Test/GetCorrectAnswer",
+            //    data: {
+            //        idquestion: idquestion
+            //    },
+            //    success: function(data) {
+            //        CorrectAnswer = data.answerslist.$values[0].idanswer
+            //        console.log(CorrectAnswer == idanswer)
+            //        if (CorrectAnswer == idanswer) {
+            //            idques.parent().parent().find(".right_answer").removeClass("d-none")
+            //        } else {
+            //            idques.parent().parent().find(".incorrect_answer").removeClass("d-none")
+            //            idques.parent().parent().append("Đáp án là: " + "<b class='fs-5'>" + idques.parent().find("#" + CorrectAnswer).next().text()[0] + "</b>")
+            //        }
+            //        idques.parent().find("input").attr('disabled', 'disabled')
+
+
+            //    }
+            //})
+
+
+        }
+var total_point = -1
+        async function submitAnswer(Warning = true) {
+            var listAnswer = []
+            
+            $(".question-exam").each(function() {
+                console.log("hh")
+                var answerSelected = $(this).find("input:checked")
+                if (answerSelected.length == 0) {
+                    if (Warning) {
+                        console.log('chưa chọn đáp án ' + $(this).find("b").text())
+                        alert("chưa chọn đáp án " + $(this).find("b").text())
+                        listAnswer = []
+                        return false
+                    }
+
+                } else {
+                    listAnswer.push(+(answerSelected.attr('id')))
+                    console.log(listAnswer)
+                    console.log("hhd")
+                }
+            })
+            if (listAnswer.length!=0||!Warning) {
+                await $.ajax({
+                    url: "/Exam/ResultExam",
+                    data: JSON.stringify({ listAnswer }),
+                    dataType: "json",
+                    type: "POST",
+                    success: function(res) {
+                        console.log("-----------câu đúng----------")
+                        console.log(res)
+                        total_point = +res
+                        console.log(listAnswer)
+                    }
+                })
+
+                //----------show đáp án-----------------
+                $(".question-exam").each(function() {
+                    var _this = $(this)
+                    var idquestion = $(this).find(".question").attr("IdQuestion")
+                    var idanswer = $(this).find("input:checked").attr("id") || (-1)
+                    console.log(idquestion)
+                    var CorrectAnswer
+                    $.ajax({
+                        url: "/Test/GetCorrectAnswer",
+                        data: {
+                            idquestion: idquestion
+                        },
+                        success: function(data) {
+                            CorrectAnswer = data.answerslist.$values[0].idanswer
+                            console.log(CorrectAnswer == idanswer)
+                            if (CorrectAnswer == idanswer) {
+                                _this.find(".right_answer").removeClass("d-none")
+                                $(".number-container").find(`a[href="#question-${idquestion}"]`).first().addClass("true")
+                            } else {
+                                _this.find(".incorrect_answer").removeClass("d-none")
+                                _this.append("Đáp án là: " + "<b class='fs-5'>" + _this.find("#" + CorrectAnswer).next().text()[0] + "</b>")
+                                $(".number-container").find(`a[href="#question-${idquestion}"]`).first().addClass("false")
+                            }
+                            _this.find(":input").attr('disabled', 'disabled')
+                            $(".submit-test").hide()
+
+                        }
+                    })
+
+                })
+                await console.log(total_point+"-------ádad-----------")
+                await $(".test-question-header").addClass("d-none")
+                await $(".total-point-header").removeClass("d-none")
+                await $(".total-point-header").find("span").first().text(total_point)
+            }
+        }
+
+    </script>
+}

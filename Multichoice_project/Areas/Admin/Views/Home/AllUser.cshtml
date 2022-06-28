@@ -1,0 +1,72 @@
+﻿@using Multichoice_project.Models;
+@{
+    ViewData["Title"] = "AllUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    ViewData["UserLogin"] = "Tín";
+    ViewData["UserLoginFirst"] = "T";
+
+    ViewData["User-active"] = "active";
+    ViewData["User-all"] = "active";
+    ViewData["Nav-open-user"] = "side-nav-opened";
+    ViewData["Display-submenu-user"] = "display: block";
+}
+<div class="py-4 px-3 px-md-4">
+    <div class="card mb-3 mb-md-4">
+        <div class="card-body" style="overflow-x: overlay;">
+            <div class="table-responsive-xl">
+                <table class="table text-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th class="font-weight-semi-bold border-top-0 py-2">#</th>
+                            <th class="font-weight-semi-bold border-top-0 py-2">Name</th>
+                            <th class="font-weight-semi-bold border-top-0 py-2">Email</th>
+                            <th class="font-weight-semi-bold border-top-0 py-2">User Name</th>
+                            <th class="font-weight-semi-bold border-top-0 py-2">Status</th>
+                            <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (User user in ViewBag.User)
+                        {
+                            <tr>
+                                <td class="py-3">1</td>
+                                <td class="align-middle py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="position-relative mr-2">
+                                            <span class="indicator indicator-lg indicator-bordered-reverse indicator-top-left indicator-success rounded-circle"></span>
+                                            <!--img class="avatar rounded-circle" src="#" alt="John Doe"-->
+                                            <span class="avatar-placeholder mr-md-2">@user.FullName[0]</span>
+                                        </div>
+                                        @user.FullName
+                                    </div>
+                                </td>
+                                <td class="py-3">@user.Email</td>
+                                <td class="py-3">@user.UserName</td>
+                                <td class="py-3">
+                                    @if (user.RoleName == "Admin")
+                                    {
+                                        <span class="badge badge-pill badge-success">Admin</span>
+                                    }else
+                                    {
+                                        <span class="badge badge-pill badge-warning">User</span>
+                                    }
+                                </td>
+                                <td class="py-3">
+                                    <div class="position-relative">
+                                        <a class="link-dark d-inline-block" href="#">
+                                            <i class="gd-pencil icon-text"></i>
+                                        </a>
+                                        <a class="link-dark d-inline-block" href="#">
+                                            <i class="gd-trash icon-text"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

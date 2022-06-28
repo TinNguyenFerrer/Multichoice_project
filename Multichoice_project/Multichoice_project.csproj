@@ -83,4 +83,11 @@
     <None Include="wwwroot\plugins\bower_components\popper.js\dist\umd\popper.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Shared\_LayoutExam.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

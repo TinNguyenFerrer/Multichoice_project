@@ -13,10 +13,10 @@ namespace Multichoice_project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private UnitOfWork _unitOfWork;
+        private UnitOfWork _UnitOfWork;
         public HomeController(Multichoise_DBContext dbcontext)
         {
-            _unitOfWork =new UnitOfWork(dbcontext);
+            _UnitOfWork =new UnitOfWork(dbcontext);
         }
         public static string GetMD5(string str)
         {
@@ -36,6 +36,14 @@ namespace Multichoice_project.Controllers
 
         public IActionResult Index()
         {
+            var data = (from test in _UnitOfWork.TestRepository.GetAll()
+                        select test);
+            ViewBag.Model = data.ToList();
+            if (data.Any())
+            {
+                data.ToList();
+                return View(data);
+            }
             return View();
         }
 
@@ -60,8 +68,8 @@ namespace Multichoice_project.Controllers
         {
             user.RoleName = "Admin";
             user.PassWord = GetMD5(user.PassWord);
-            _unitOfWork.UserRepository.Insert(user);
-            _unitOfWork.SaveChange();
+            _UnitOfWork.UserRepository.Insert(user);
+            _UnitOfWork.SaveChange();
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
@@ -80,15 +88,16 @@ namespace Multichoice_project.Controllers
             }
             else
             {
-                var data = (from userlogin in _unitOfWork.UserRepository.GetAll()
+                var data = (from userlogin in _UnitOfWork.UserRepository.GetAll()
                             where (userlogin.UserName == user.UserName && userlogin.PassWord == GetMD5(user.PassWord))
                             select userlogin).ToList();
                 if(data.Count > 0)
                 {
-                    HttpContext.Session.SetString("username", user.UserName);
-                    HttpContext.Session.SetString("password", user.PassWord);
-                    Console.WriteLine("Thêm sestion thanh công");
-                    return RedirectToAction(nameof(Index));
+                    HttpContext.Session.SetString("UserName", user.UserName);
+                    HttpContext.Session.SetInt32("IdUser", data.First().Id);
+                    Console.WriteLine("Thêm sestion thanh công:"+ HttpContext.Session.GetInt32("IdUser"));
+                    //return RedirectToAction(nameof(Index));
+                    return RedirectPermanent("/Test/");
                 }
                 else
                 {

@@ -32,20 +32,21 @@
             <div class="form-check @question.Id" IdQuestion="@question.Id" disable>
             </div>
             <div class="incorrect_answer d-none">
-                <i class="fa-solid fa-xmark fa-lg "></i>
+                <i class="fas fa-times fa-lg"></i>
                 Sai
             </div>
             <div class="right_answer text-primary d-none">
-                <i class="fa-solid fa-thumbs-up fa-lg"></i>
+                <i class="fas fa-thumbs-up fa-lg"></i>
                 Đúng
             </div>
         </div>
         <hr width="100%" align="center" />
     }
 </div>
-
+<div class="d-grid gap-2">
+  <button onclick="window.location='/Exam/Index/@u.Id'" class="btn btn-warning" type="button">Vào Thi</button>
+</div>
 @section Scripts{
-        ádasd
 
     <script type="text/javascript">
         $(".form-check").each(async function() {

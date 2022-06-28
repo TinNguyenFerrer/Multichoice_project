@@ -5,6 +5,6 @@ namespace Multichoice_project.Core.Repositories
 {
     public interface IQuestionRepositories : IRepositories<Question>
     {
-        public IEnumerable<Question> GetQuestionsByIdTest(int id);
+        public IEnumerable<Question> GetQuestionsAnswersByIdTest(int id);
     }
 }

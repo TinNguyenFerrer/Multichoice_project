@@ -114,7 +114,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public JsonResult GetQuestionsByIdTest(int id)
         {
-            List<Question> ListQues = _unitOfWork.QuestionRepository.GetQuestionsByIdTest(id).ToList();
+            List<Question> ListQues = _unitOfWork.QuestionRepository.GetQuestionsAnswersByIdTest(id).ToList();
             //Console.WriteLine("---------------lisst caau hoir");
             //Console.WriteLine(ListQues[5].Content);
             //Console.WriteLine(ListQues.ToArray().Length);
@@ -156,7 +156,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
                 Question ques = new Question();
                 ques.Mark = 1;
                 ques.Content = Lques["question"].ToString();
-                Console.WriteLine("caau hoi: "+ ques.Content);
+                Console.WriteLine("caau hoi: " + ques.Content);
                 ques.QuestionTypeID = 1;
                 if (Lques["idquestion"].ToString() != "")
                 {
@@ -170,7 +170,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
                 {
                     Answer ans = new Answer();
                     ans.Content = answer["content"].ToString();
-                    
+
                     if (i == Int32.Parse(Lques["rightAnswer"].ToString()))
                     {
                         ans.IsCorrectAnswer = true;
@@ -195,20 +195,20 @@ namespace Multichoice_project.Areas.Admin.Controllers
             Task<string> body;
             using (StreamReader stream = new StreamReader(Request.Body))
             {
-                 body =  stream.ReadToEndAsync();
+                body = stream.ReadToEndAsync();
             }
 
             JsonObject t = JsonNode.Parse(await body).AsObject();
             Console.WriteLine("-------------------------list question delete---------------");
             Console.WriteLine(t);
-            foreach(var idQ in t["listidques"].AsArray())
+            foreach (var idQ in t["listidques"].AsArray())
             {
                 Console.WriteLine(Int32.Parse(idQ.ToString()));
                 _unitOfWork.QuestionRepository.Delete(Int32.Parse(idQ.ToString()));
             }
             _unitOfWork.SaveChange();
-            return  Json(new { code = 200 });
-            
+            return Json(new { code = 200 });
+
         }
         public async Task<JsonResult> DeleteListIdAnswer()
         {
@@ -230,11 +230,81 @@ namespace Multichoice_project.Areas.Admin.Controllers
             return Json(new { code = 200 });
 
         }
-        //public ViewResult DeleteTest()
-        //{
-        //    return Redirect()
-        //}
-
-
+        public IActionResult DeleteTest(int id)
+        {
+            _unitOfWork.TestRepository.Delete(id);
+            _unitOfWork.SaveChange();
+            return RedirectToAction(nameof(AllTest));
+        }
+        public IActionResult Point()
+        {
+            ViewBag.Result = (from result in _unitOfWork.ResultRepository.GetAll()
+                              join test in _unitOfWork.TestRepository.GetAll() on result.TestId equals test.Id
+                              select test).Distinct().ToList();
+            return View();
+        }
+        public IActionResult PointDetail(int Id)
+        {
+            ViewBag.Result = (from result in _unitOfWork.ResultRepository.GetAll()
+                              join test in _unitOfWork.TestRepository.GetAll() on result.TestId equals test.Id
+                              join user in _unitOfWork.UserRepository.GetAll() on result.UserId equals user.Id
+                              where result.TestId == Id
+                              select result).Distinct().ToList();
+            return View();
+        }
+        public IActionResult AllSubject()
+        {
+            ViewBag.Subject = (from subj in _unitOfWork.SubjectRepository.GetAll()
+                               join edu in _unitOfWork.EducationalFieldRepository.GetAll() on subj.EducationalFieldId equals edu.Id
+                               select subj).Distinct().ToList();
+            return View();
+            ;
+        }
+        
+        public IActionResult DeleteSubject(int id)
+        {
+            _unitOfWork.SubjectRepository.Delete(id);
+            _unitOfWork.SaveChange();
+            return RedirectToAction(nameof(AllSubject));
+        }
+        public IActionResult CreateSubject()
+        {
+            ViewBag.Educational_field = (from edu in _unitOfWork.EducationalFieldRepository.GetAll()
+                                         select edu).ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateSubject(Subject subject)
+        {
+            _unitOfWork.SubjectRepository.Insert(subject);
+            _unitOfWork.SaveChange();
+            return RedirectToAction(nameof(AllSubject));
+        }
+        public IActionResult EditSubject(int id)
+        {
+            ViewBag.Subject = (from subj in _unitOfWork.SubjectRepository.GetAll()
+                               join edu in _unitOfWork.EducationalFieldRepository.GetAll() on subj.EducationalFieldId equals edu.Id
+                               where subj.Id == id
+                               select subj).Distinct().ToList().First();
+            ViewBag.Educational_field = (from edu in _unitOfWork.EducationalFieldRepository.GetAll()
+                                         select edu).ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult EditSubject(Subject subject)
+        {
+            _unitOfWork.SubjectRepository.Update(subject);
+            _unitOfWork.SaveChange();
+            return RedirectToAction(nameof(AllSubject));
+        }
+        public IActionResult AllUser()
+        {
+            ViewBag.User = _unitOfWork.UserRepository.GetAll();
+            return View();
+        }
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
     }
 }

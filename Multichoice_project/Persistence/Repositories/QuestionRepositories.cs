@@ -11,12 +11,12 @@ namespace Multichoice_project.Persistence.Repositories
         {
         }
 
-        public IEnumerable<Question> GetQuestionsByIdTest(int id)
+        public IEnumerable<Question> GetQuestionsAnswersByIdTest(int id)
         {
             return ((from ques in this.GetAll()
                      join answer in this.DbContext.Answers on ques.Id equals answer.QuestionId
                      where ques.TestId == id
-                     select ques).ToList());
+                     select ques).Distinct().ToList());
         }
     }
 }

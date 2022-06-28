@@ -1,0 +1,35 @@
+﻿@using Multichoice_project.Models;
+@{
+    ViewData["Title"] = "Point";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Point-active"] = "active";
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name of Test</th>
+            <th scope="col">Point</th>
+            <th scope="col">User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 1;
+        }
+        @foreach (Result result in ViewBag.Result)
+        {
+
+            <tr>
+                <th scope="row">@i</th>
+                <td>@result.Test.Name</td>
+                <td>@result.NumberOfCorrectAnswers / @result.NumberQuestionOfTest</td>
+                <td>@result.User.UserName</td>
+            </tr>
+
+            i++;
+        }
+    </tbody>
+</table>

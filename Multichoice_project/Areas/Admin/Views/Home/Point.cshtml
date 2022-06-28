@@ -1,0 +1,44 @@
+﻿@using Multichoice_project.Models;
+@{
+    ViewData["Title"] = "Point";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Point-active"] = "active";
+}
+
+<div class="py-4 px-3 px-md-4">
+    <div class="card mb-3 mb-md-4">
+        <div class="card-body" style="overflow-x: overlay;">
+
+            <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                <div class="h3 mb-0">Point</div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name of Test</th>
+                        <th scope="col">turns</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (Test test in ViewBag.Result)
+                    {
+
+                        <tr onclick='window.location="/Admin/Home/PointDetail/@test.Id"'>
+                            <th scope="row">@i</th>
+                            <td>@test.Name</td>
+                            <td>@test.Results.ToList().Count</td>
+                            <td>yuy</td>
+                        </tr>
+
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

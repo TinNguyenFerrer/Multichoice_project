@@ -10,5 +10,9 @@ namespace Multichoice_project.Persistence.Repositories
         public AnswerRepositories(Multichoise_DBContext dbContext) : base(dbContext)
         {
         }
+        public bool IsRightAnswer(int Id)
+        {
+            return this.GetByID(Id).IsCorrectAnswer;
+        }
     }
 }
