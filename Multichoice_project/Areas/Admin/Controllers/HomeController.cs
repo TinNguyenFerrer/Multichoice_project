@@ -260,7 +260,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
             return View();
             ;
         }
-        
+
         public IActionResult DeleteSubject(int id)
         {
             _unitOfWork.SubjectRepository.Delete(id);
@@ -306,5 +306,46 @@ namespace Multichoice_project.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult CreateUser(User user)
+        {
+            Console.WriteLine("-----CreateUser-----");
+            if (user != null)
+            {
+                if (user.RoleName == null)
+                {
+                    user.RoleName = "User";
+                }
+                user.PassWord = Multichoice_project.Controllers.HomeController.GetMD5(user.PassWord);
+                _unitOfWork.UserRepository.Insert(user);
+                _unitOfWork.SaveChange();
+                
+            }
+                return RedirectPermanent("/Admin/Home/AllUser");
+
+        }
+        public IActionResult DeleteUser(int id)
+        {
+            Console.WriteLine("------DeleteUser----------");
+            _unitOfWork.UserRepository.Delete(id);
+            _unitOfWork.SaveChange();
+            return RedirectPermanent("/Admin/Home/AllUser");
+        }
+        public IActionResult EditUser(int Id)
+        {
+            ViewBag.User = (from user in _unitOfWork.UserRepository.GetAll()
+                            where user.Id == Id
+                            select user).ToList().First();
+            return View();
+        }
+        //public JsonResult SwitchRole()
+        //{
+        //    //Console.WriteLine("_-------------SwitchRole--------------------");
+        //    //_unitOfWork.UserRepository.SwitchRole(id);
+        //    //_unitOfWork.SaveChange();
+
+        //    //return RedirectPermanent("/Admin/Home/AllUsers");
+        //    return Json(new { code = 200 });
+        //}
     }
 }

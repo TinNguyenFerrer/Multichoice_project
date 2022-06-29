@@ -5,7 +5,7 @@ namespace Multichoice_project.Core.Repositories
 {
     public interface IUserRepositories : IRepositories<User> 
     {
-        
 
+        public void SwitchRole(int id);
     }
 }
