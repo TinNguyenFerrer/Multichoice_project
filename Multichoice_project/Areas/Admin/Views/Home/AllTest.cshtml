@@ -3,8 +3,8 @@
     ViewData["Title"] = "CreateTest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     //tên user
-    ViewData["UserLogin"] = "Tín";
-    ViewData["UserLoginFirst"] = "T";
+    ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["Test-active"]="active";
     ViewData["Test-all"]="active";

@@ -93,7 +93,7 @@ namespace Multichoice_project.Controllers
                             select userlogin).ToList();
                 if(data.Count > 0)
                 {
-                    HttpContext.Session.SetString("UserName", user.UserName);
+                    HttpContext.Session.SetString("UserName", data.First().UserName);
                     HttpContext.Session.SetInt32("IdUser", data.First().Id);
                     Console.WriteLine("Thêm sestion thanh công:"+ HttpContext.Session.GetInt32("IdUser"));
                     //return RedirectToAction(nameof(Index));

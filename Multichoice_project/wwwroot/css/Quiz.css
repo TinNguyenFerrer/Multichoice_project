@@ -1,31 +1,43 @@
-body{
+:root {
+    --square-20: 20px;
+}
+@font-face {
+    src: url(/Font/Montserrat-VariableFont_wght.ttf);
+    font-family: Montserrat;
+}
+
+body {
     margin: 0;
 }
+
 input[type=text]:focus {
     box-shadow: none;
 }
-.header{
+
+.header {
     border-bottom: 2px solid #2988bc;
     height: 60px;
     box-shadow: 2px 2px rgb(231, 231, 232);
 }
-.content{
-    background-image: url(../img/webinar4.jpg);
+
+.content {
+    background-image: url(../img/banner-1.png);
     background-repeat: no-repeat;
     background-size: 100%;
+    background-position-y: bottom;
     background-color: rgb(248, 252, 255);
-    height: 300px;
-    font-family: 'Droid Sans',sans-serif;
+    height: 460px;
+    font-family: 'Montserrat',sans-serif;
 }
+
 .container {
-    
     margin: auto;
     height: 100%;
     width: 1200px;
     padding: 0px 20px;
     position: relative;
-    
 }
+
 .blue_search {
     background-color: #0d6efd;
     border-color: #0d6efd;
@@ -34,43 +46,277 @@ input[type=text]:focus {
 .navbar {
     height: 100%;
     padding: 0;
-    justify-content: flex-start
+    display: flex;
+    justify-content: space-between;
 }
-.form-control{
-    width: 300px;
+
+.form-control {
+    width: 390px;
+    height: 50px;
     float: left;
 }
-.search{
-    margin-left: 0px;
-}
-.search-btn{
-    border-top-left-radius:0px;
-    border-bottom-left-radius:0px;
+    .form-control + button {
+        height: 50px;
+    }
+    .banner-title {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: stretch;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .banner-title .banner-title-group {
+        width: 730px;
+        color: #3c4852;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .banner-title .title-name {
+        font-size: 44px;
+        color: #333d46;
+        text-align: center;
+        font-weight: 600;
+        padding: 0 5px;
+    }
+        .banner-title .title-name .tilte-name_span {
+            color: #0c6fff;
+        }
+
+        .search {
+            margin-left: 0px;
+        }
+
+.search-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     margin-left: -3px;
     box-shadow: none;
 }
-.search-btn:focus{
-    box-shadow: none;
-}
-.logo{
+
+    .search-btn:focus {
+        box-shadow: none;
+    }
+
+.logo {
     height: 100%;
-    
     float: left;
     margin-left: -20px;
     padding-right: 13px;
 }
 
-h1{
+h1 {
     color: #025481;
     font-size: 50px;
 }
-.padding-top{
-    padding-top:20px;
+
+.padding-top {
+    padding-top: 20px;
 }
 
+.navbar-nav-menu li {
+    display: inline-block;
+    padding: 10px 8px;
+    margin: auto 5px;
+    font-size: 15px;
+    height: 100%;
+}
 
+.navbar-nav-menu .navbar-nav-menu_li {
+    position: relative;
+}
 
+.navbar-nav-menu a {
+    text-decoration: none;
+    color: black;
+    font-weight: 370;
+}
 
+    .navbar-nav-menu a::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 4px;
+        background-color: #227bff;
+        transition: width 0.4s ease 0s, left .3s ease 0s;
+    }
 
+.navbar-nav-menu .nav-menu-a:hover::after {
+    width: 100%;
+}
 
+.navbar-nav-menu {
+    margin-bottom: auto;
+}
 
+.dropdow-menu {
+    position: absolute;
+    top: 100%;
+    background-color: #ffff;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0px 0px 30px 0px rgb(32 32 32 / 15%);
+    padding: 10px;
+    padding-bottom: 5px;
+    border-radius: 0px;
+}
+
+    .dropdow-menu::before {
+        position: absolute;
+        top: -9px;
+        left: 20px;
+        content: "";
+        width: 18px;
+        height: 18px;
+        background-color: #ffff;
+        transform: rotate(45deg)
+    }
+
+    .dropdow-menu li {
+        transition: padding-left ease .4s 0s, left .3s ease 0s;
+        display: block;
+        z-index: 10;
+        min-width: 150px;
+        padding: 10px 10px 5px 10px;
+        margin-left: 2px;
+        border-bottom: 1px solid #e4e8ec;
+    }
+
+        .dropdow-menu li:last-child {
+            border-bottom: none
+        }
+
+        .dropdow-menu li ::after {
+        }
+
+.navbar-nav-menu_li:hover .dropdow-menu {
+    opacity: 1;
+    width: auto;
+    height: auto;
+    transition: opacity ease .5s;
+    overflow: initial;
+}
+
+.dropdow-menu li:hover {
+    padding-left: 20px;
+    color: #328cfc;
+}
+
+.dropdow-menu li:hover a {
+    color: #328cfc;
+}
+/*------------featued list--------------*/
+.featued-list{
+    min-height:100px;
+    margin-top:-40px;
+    display:flex;
+    justify-content:center;
+    text-align:center;
+}
+.bor {
+    border: 1px solid black;
+}
+.featued-list .tag {
+    overflow: hidden;
+    background-color: white;
+    border-radius: 5px;
+    margin: 0 9px 0 10px;
+    box-shadow: 0px 0px 8px 8px #487ff41a;
+    height: 290px;
+    cursor: pointer;
+}
+.featued-list .img{
+    padding: 42px 25px 42px 25px;
+    height:150px;
+}
+.featued-list .col-2:hover{
+    margin-top: -15px;
+}
+.featued-list .col-2{
+    transition: margin ease .5s;
+}
+.featued-list .img img {
+    height: 100%;
+}
+.featued-list .tag p{
+    font-size: 10px;
+    padding: 5px;
+}
+/*icon dang nhap*/
+
+.account-box {
+    height: 62%;
+    display: inline-block;
+    text-align:center;
+}
+.user-logged {
+    height: 100%;
+    background-color: #b2deff;
+    padding: 4px 6px 2px 20px;
+    border-radius: 20px;
+    text-align: center;
+    cursor:pointer;
+}
+.account-box .user-logged h6 {
+    display: inline-block;
+    font-weight: 500;
+    padding-right: 8px;
+    padding-top: 2px;
+    color: #065592;
+    font-size: 11px;
+}
+.account-box img {
+    height: 86%;
+    border-radius: 50%;
+}
+/*========section margin==========*/
+section{
+    margin-bottom: 40px;
+}
+/*===========lession list=========*/
+.lession{
+    /*background-image:url("/img/Lession-list/lession1.jpg"); 
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size:contain;
+    background-position:top;*/
+    width: 100%;
+    position:relative;
+    padding: 0 0;
+}
+    .lession img{
+        width:100%;
+    }
+    .lession-box {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0 85px;
+        max-width: 600px;
+    }
+    .lession-box a {
+        padding: 7px 30px;
+        margin-top: 500px;
+        background: #ffb83c;
+        border-radius: 3px;
+        font-weight:600;
+        color: white;
+        text-decoration: none;
+    }
+        .lession-box a:hover {
+            background-color: #c79132;
+        }
+.lession-2 .lession-box{
+    right:0px;
+}
+.carousel_prev {
+    justify-content: flex-start;
+}
+.carousel_next {
+    justify-content: flex-end;
+}

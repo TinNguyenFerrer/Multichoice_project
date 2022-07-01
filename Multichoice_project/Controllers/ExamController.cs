@@ -16,15 +16,17 @@ namespace Multichoice_project.Controllers
 
         public IActionResult Index(int id)
         {
-            //if (HttpContext.Session.GetInt32("IdUser") == null)
-            //{
-            //    Console.WriteLine("lỗi đăng nhập"+ HttpContext.Session.GetInt32("IdUser"));
-            //    //return RedirectPermanent("/Home/Login");
-            //}
-            //else { 
-            //    this.idUser = (int)HttpContext.Session.GetInt32("IdUser");
-            //}
-            
+            if (HttpContext.Session.GetInt32("IdUser") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                this.idUser = (int)HttpContext.Session.GetInt32("IdUser");
+                TempData["IdUser"] = (int)HttpContext.Session.GetInt32("IdUser");
+            }
+
             var datatest = _UnitOfwork.TestRepository.GetByID(id);
             TempData["IdTest"] = id;
 
@@ -38,7 +40,7 @@ namespace Multichoice_project.Controllers
                 return View();
             }
 
-            return RedirectPermanent("/Home/Index");
+            return RedirectToAction("Index","Home");
 
         }
         public IActionResult TakeExam()
@@ -49,6 +51,7 @@ namespace Multichoice_project.Controllers
         [HttpPost]
         public async Task<int> ResultExam()
         {
+
             string body = "";
             using (StreamReader stream = new StreamReader(Request.Body))
             {
@@ -70,7 +73,7 @@ namespace Multichoice_project.Controllers
             result.TestId = idTest;
             //sửa lại user
             Console.WriteLine("-------------id user---------:"+ this.idUser);
-            result.UserId = this.idUser;
+            result.UserId = Int32.Parse(TempData["IdUser"].ToString());
 
             result.DateTime = DateTime.Now;
             result.NumberOfCorrectAnswers = point;
@@ -78,6 +81,7 @@ namespace Multichoice_project.Controllers
             _UnitOfwork.ResultRepository.Insert(result);
             _UnitOfwork.SaveChange();
             TempData.Keep("IdTest");
+            TempData.Keep("IdUser");
             return point;
         }
     }

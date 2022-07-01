@@ -211,10 +211,10 @@
 
 
         }
-var total_point = -1
+        var total_point = -1
         async function submitAnswer(Warning = true) {
             var listAnswer = []
-            
+
             $(".question-exam").each(function() {
                 console.log("hh")
                 var answerSelected = $(this).find("input:checked")
@@ -232,7 +232,7 @@ var total_point = -1
                     console.log("hhd")
                 }
             })
-            if (listAnswer.length!=0||!Warning) {
+            if (listAnswer.length != 0 || !Warning) {
                 await $.ajax({
                     url: "/Exam/ResultExam",
                     data: JSON.stringify({ listAnswer }),
@@ -276,11 +276,12 @@ var total_point = -1
                     })
 
                 })
-                await console.log(total_point+"-------ádad-----------")
+                await console.log(total_point + "-------ádad-----------")
                 await $(".test-question-header").addClass("d-none")
                 await $(".total-point-header").removeClass("d-none")
                 await $(".total-point-header").find("span").first().text(total_point)
             }
+            clearInterval(intervalId);
         }
 
     </script>

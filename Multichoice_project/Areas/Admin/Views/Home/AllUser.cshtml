@@ -3,8 +3,8 @@
     ViewData["Title"] = "AllUser";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
-    ViewData["UserLogin"] = "Tín";
-    ViewData["UserLoginFirst"] = "T";
+    ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["User-active"] = "active";
     ViewData["User-all"] = "active";
@@ -46,10 +46,10 @@
                                 <td class="py-3">
                                     @if (user.RoleName == "Admin")
                                     {
-                                        <span onclick="window.location = '/Admin/Home/SwitchRole/@user.Id'" class="badge badge-pill badge-success">Admin</span>
+                                        <a href="/Admin/User/SwitchRoleName/@user.Id"><span class="badge badge-pill badge-success">Admin</span></a>
                                     }else
                                     {
-                                        <span onclick="window.location = '/Admin/Home/SwitchRole/@user.Id'" class="badge badge-pill badge-warning">User</span>
+                                        <a href="/Admin/User/SwitchRoleName/@user.Id"><span class="badge badge-pill badge-warning">User</span></a>
                                     }
                                 </td>
                                 <td class="py-3">

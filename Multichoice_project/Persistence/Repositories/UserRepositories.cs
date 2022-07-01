@@ -13,17 +13,22 @@ namespace Multichoice_project.Persistence.Repositories
         public void SwitchRole(int id)
         {
             User user = this.GetByID(id);
+
             Console.WriteLine("------SwitchRole------");
+
             if (user != null)
             {
-                if (user.RoleName == "Admin")
+                if (String.Compare(user.RoleName,"Admin",true)==0)
                 {
                     user.RoleName = "User";
+                    
                 }
                 else
                 {
                     user.RoleName = "Admin";
+
                 }
+                this.Update(user);
             }
         }
 

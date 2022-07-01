@@ -8,21 +8,48 @@ using System.Web;
 
 namespace Multichoice_project.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class UserController : Controller
     {
+        private UnitOfWork _unitOfWork;
+        private readonly ILogger<HomeController> _logger;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public UserController(Multichoise_DBContext dbcontext)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+            _unitOfWork = new UnitOfWork(dbcontext);
+        }
         public IActionResult Index()
         {
             return View();
         }
-        public JsonResult SwitchRole()
+        public IActionResult SwitchRoleName(int id)
         {
-            //Console.WriteLine("_-------------SwitchRole--------------------");
-            //_unitOfWork.UserRepository.SwitchRole(id);
-            //_unitOfWork.SaveChange();
-            //return RedirectPermanent("/Admin/Home/AllUsers");
+            Console.WriteLine("--------------------Switch_Role------------");
+            User user = _unitOfWork.UserRepository.GetByID(id);
+            if (String.Compare(user.RoleName, "Admin", true) == 0)
+            {
+                user.RoleName = "User";
+            }
+            else
+            {
+                user.RoleName = "Admin";
+            }
+            _unitOfWork.UserRepository.Update(user);
+            _unitOfWork.SaveChange();
 
-
-            return Json(new { code = 200 });
+            return Redirect("/Admin/Home/AllUser");
+        }
+        public IActionResult EditUser(User user)
+        {
+            if (user.RoleName == null)
+            {
+                user.RoleName = "User";
+            }
+            user.PassWord = Multichoice_project.Controllers.HomeController.GetMD5(user.PassWord);
+            _unitOfWork.UserRepository.Update(user);
+            _unitOfWork.SaveChange();
+            return Redirect("/Admin/Home/AllUser");
         }
     }
 }

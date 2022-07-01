@@ -6,10 +6,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions
                 .ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
 
+
+//session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(2);
+});
+
 //tránh vòng lặp
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession();
+
+//builder.Services.AddSession();
 builder.Services.AddDbContext<Multichoise_DBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,13 +30,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseSession();
+app.UseAuthorization();
 
 //app.UseEndpoints(endpoints =>
 //{
@@ -47,12 +58,12 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-//---------
+
+//Save Reques
 app.Use((context, next) =>
 {
     context.Request.EnableBuffering();
     return next();
 });
-//----------
 
 app.Run();

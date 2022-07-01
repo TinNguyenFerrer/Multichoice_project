@@ -3,8 +3,8 @@
     ViewData["Title"] = "AllUser";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
-    ViewData["UserLogin"] = "Tín";
-    ViewData["UserLoginFirst"] = "T";
+     ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["User-active"] = "active";
     ViewData["User-add-new"] = "active";

@@ -3,6 +3,8 @@
     ViewData["Title"] = "Point";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewData["Point-active"] = "active";
+    ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 }
 
 
@@ -11,6 +13,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name of Test</th>
+            <th scope="col">Date time</th>
             <th scope="col">Point</th>
             <th scope="col">User</th>
         </tr>
@@ -25,6 +28,7 @@
             <tr>
                 <th scope="row">@i</th>
                 <td>@result.Test.Name</td>
+                <td>@result.DateTime</td>
                 <td>@result.NumberOfCorrectAnswers / @result.NumberQuestionOfTest</td>
                 <td>@result.User.UserName</td>
             </tr>

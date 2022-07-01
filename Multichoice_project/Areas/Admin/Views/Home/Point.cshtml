@@ -3,6 +3,8 @@
     ViewData["Title"] = "Point";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewData["Point-active"] = "active";
+    ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 }
 
 <div class="py-4 px-3 px-md-4">
@@ -17,8 +19,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name of Test</th>
-                        <th scope="col">turns</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Turns</th>
+                        <th scope="col">Create Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +34,7 @@
                             <th scope="row">@i</th>
                             <td>@test.Name</td>
                             <td>@test.Results.ToList().Count</td>
-                            <td>yuy</td>
+                            <td>@test.CreatedTime</td>
                         </tr>
 
                         i++;

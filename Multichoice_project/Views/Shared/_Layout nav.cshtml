@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Multichoice_project</title>
+    @*<link rel="stylesheet" href="~/Multichoice_project.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Test/Test.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Quiz.css" asp-append-version="true">
+    <script src="https://kit.fontawesome.com/a5ab0b4337.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <nav class="navbar">
+                <img class="logo" src="~/img/Picture5.png">
+                <div class="navbar-collapse-menu">
+                    <ul class="navbar-nav-menu">
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">Giáo dục THPT</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">Đại Học</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                       
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">English Test</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">IT Test</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">Thi THPHQG</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li">
+                            <a class=" nav-menu-a" href="#">Hướng Ngiệp</a>
+                            <ul class="dropdow-menu">
+                                <li>
+                                    <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                    <a href="#">Lớp 10</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+
+                    </ul>
+                </div>
+                <div>
+                    Login
+                </div>
+
+
+            </nav>
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="search">
+
+                <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?">
+                <button class="btn btn-primary search-btn blue_search">Tìm Kiếm</button>
+            </div>
+            <br>
+            <br>
+            <h1>TRẮC NGHIỆM ONLINE </h1>
+            <h2>kiểm tra kiến thức hiệu quả</h2>
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+
+    <div class="container">
+        <div class="padding-top">
+            <main role="main" class="pb-3">
+                @RenderBody()
+
+            </main>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

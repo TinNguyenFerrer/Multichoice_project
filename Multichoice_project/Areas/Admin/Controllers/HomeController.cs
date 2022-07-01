@@ -37,6 +37,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult CreateTest()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewData["Subject"] = _unitOfWork.SubjectRepository.GetAll().ToList();
             return View();
         }
@@ -99,12 +105,24 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult AllTest()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Test = _unitOfWork.TestRepository.GetAll().ToList();
 
             return View();
         }
         public IActionResult EditTest(int id)
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             Test temp = _unitOfWork.TestRepository.GetByID(id);
             ViewBag.Test = temp;
             ViewBag.SubjectSelected = _unitOfWork.SubjectRepository.GetByID(temp.SubjectId).Name;
@@ -114,6 +132,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public JsonResult GetQuestionsByIdTest(int id)
         {
+
             List<Question> ListQues = _unitOfWork.QuestionRepository.GetQuestionsAnswersByIdTest(id).ToList();
             //Console.WriteLine("---------------lisst caau hoir");
             //Console.WriteLine(ListQues[5].Content);
@@ -232,12 +251,19 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult DeleteTest(int id)
         {
+
             _unitOfWork.TestRepository.Delete(id);
             _unitOfWork.SaveChange();
             return RedirectToAction(nameof(AllTest));
         }
         public IActionResult Point()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Result = (from result in _unitOfWork.ResultRepository.GetAll()
                               join test in _unitOfWork.TestRepository.GetAll() on result.TestId equals test.Id
                               select test).Distinct().ToList();
@@ -245,6 +271,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult PointDetail(int Id)
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Result = (from result in _unitOfWork.ResultRepository.GetAll()
                               join test in _unitOfWork.TestRepository.GetAll() on result.TestId equals test.Id
                               join user in _unitOfWork.UserRepository.GetAll() on result.UserId equals user.Id
@@ -254,6 +286,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult AllSubject()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Subject = (from subj in _unitOfWork.SubjectRepository.GetAll()
                                join edu in _unitOfWork.EducationalFieldRepository.GetAll() on subj.EducationalFieldId equals edu.Id
                                select subj).Distinct().ToList();
@@ -269,6 +307,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult CreateSubject()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Educational_field = (from edu in _unitOfWork.EducationalFieldRepository.GetAll()
                                          select edu).ToList();
             return View();
@@ -282,6 +326,12 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult EditSubject(int id)
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.Subject = (from subj in _unitOfWork.SubjectRepository.GetAll()
                                join edu in _unitOfWork.EducationalFieldRepository.GetAll() on subj.EducationalFieldId equals edu.Id
                                where subj.Id == id
@@ -299,11 +349,23 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult AllUser()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.User = _unitOfWork.UserRepository.GetAll();
             return View();
         }
         public IActionResult CreateUser()
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             return View();
         }
         [HttpPost]
@@ -333,19 +395,51 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         public IActionResult EditUser(int Id)
         {
+            if (HttpContext.Session.GetInt32("IdUserAd") == null)
+            {
+                Console.WriteLine("lỗi đăng nhập" + HttpContext.Session.GetInt32("IdUser"));
+                return RedirectPermanent("/Admin/Home/Login");
+            }
+            ViewBag.UserLogin = _unitOfWork.UserRepository.GetByID((int)HttpContext.Session.GetInt32("IdUserAd")).UserName;
             ViewBag.User = (from user in _unitOfWork.UserRepository.GetAll()
                             where user.Id == Id
                             select user).ToList().First();
             return View();
         }
-        //public JsonResult SwitchRole()
-        //{
-        //    //Console.WriteLine("_-------------SwitchRole--------------------");
-        //    //_unitOfWork.UserRepository.SwitchRole(id);
-        //    //_unitOfWork.SaveChange();
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(User user)
+        {
+            if (user.UserName == null || user.PassWord == null)
+            {
+                Console.WriteLine("mull");
+                ViewData["ErrorLogin"] = "erorr";
+                return View();
+            }
+            else
+            {
+                var data = (from userlogin in _unitOfWork.UserRepository.GetAll()
+                            where (userlogin.UserName == user.UserName && userlogin.PassWord == Multichoice_project.Controllers.HomeController.GetMD5(user.PassWord))
+                            select userlogin).ToList();
+                if((data.Count > 0)&& String.Compare(data.First().RoleName,"Admin",true)==0)
+                {
+                    HttpContext.Session.SetString("UserNameAd", data.First().UserName);
+                    HttpContext.Session.SetInt32("IdUserAd", data.First().Id);
+                    Console.WriteLine("Thêm sestion thanh công:"+ HttpContext.Session.GetInt32("IdUser"));
+                    //return RedirectToAction(nameof(Index));
+                    return RedirectPermanent("/Admin/Home/AllTest");
+                }
+                else
+                {
+                    ViewData["ErrorLogin"] = "erorr";
+                    return View();
+                }
 
-        //    //return RedirectPermanent("/Admin/Home/AllUsers");
-        //    return Json(new { code = 200 });
-        //}
+            }
+        }
+        
     }
 }

@@ -3,8 +3,8 @@
     ViewData["Title"] = "AllUser";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
-    ViewData["UserLogin"] = "Tín";
-    ViewData["UserLoginFirst"] = "T";
+     ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["User-active"] = "active";
     ViewData["User-all"] = "active";
@@ -15,11 +15,12 @@
     <div class="card mb-3 mb-md-4">
         <div class="card-body" style="overflow-x: overlay;">
             <div class="table-responsive-xl">
-                <form action="/Admin/Home/CreateUser" method="post">
+                <form action="/Admin/User/EditUser" method="post">
                     <div class="form-row">
                         <div class="form-group col-12 col-md-6">
                             <label for="name">Full Name</label>
                             <input type="text" class="form-control" value="@ViewBag.User.FullName" id="name" name="FullName" placeholder="User Name" required>
+                            <input type="number" class="form-control d-none" value="@ViewBag.User.Id" id="name" name="Id" placeholder="User Name" required>
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label for="email">Email</label>
@@ -51,7 +52,7 @@
                         <label class="custom-control-label" for="isAdmin">Set Admin</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary float-right">Add</button>
+                    <button type="submit" class="btn btn-primary float-right">Edit</button>
                 </form>
             </div>
         </div>
