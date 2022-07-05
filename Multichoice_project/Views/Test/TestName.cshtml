@@ -1,16 +1,18 @@
 ﻿@using Multichoice_project.Models;
 @using System.Web
 @{
+    ViewData["UserName"] = ViewBag.UserNameDisplay;
     ViewData["Title"] = "TestName";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_Exam.cshtml";
     var u = ViewBag.Model;
     Int32 i = 1;
     
 }
-
-<h1>@u.Name</h1>
-<i class="fas fa-alarm-clock"></i>
-<h5> @u.Time phút</h5>
+<br />
+<h4 class="title-test">@u.Name</h4>
+<p>@u.Description</p>
+<h5 class="time-to-do-test"><i class="fas fa-stopwatch"></i> :@u.Time (phút)</h5>
+<br />
 <div class="container px-4 border rounded ">
 
     @foreach (Question question in ViewBag.question)
@@ -46,6 +48,8 @@
 <div class="d-grid gap-2">
   <button onclick="window.location='/Exam/Index?id=@u.Id'" class="btn btn-warning" type="button">Vào Thi</button>
 </div>
+<br />
+
 @section Scripts{
 
     <script type="text/javascript">

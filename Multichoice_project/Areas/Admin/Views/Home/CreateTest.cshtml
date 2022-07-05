@@ -13,14 +13,20 @@
 
     var sub = (List<Subject>)ViewData["Subject"];
 }
-
+<div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-8 py-6 col-12 FormCreateTest " style="">
         <div class="card mb-3 mb-md-4">
             <div class=" " style="min-height:100%">
                 <button type="button" class="btn btn-primary btn-sm fixedAddQuestion AddQuestion">
-                    <i class="fa-solid fa-plus"></i>
+                    <i class="fas fa-plus-circle"></i>
                     &nbsp; New Quesion
                 </button>
                 <button type="button" onclick="submitTest()" class="btn btn-sm fixedSaveTest">
@@ -309,7 +315,11 @@
                         dataType: "json",
                         contentType: "Application/json;charset=utf-8",
                         success: function(res) {
-                            console.log(res)
+                            console.log("------------respon200------------")
+                            console.log(res.code)
+                            if(res.code==200){
+                                $(window).attr('location','/Admin/Home/AllTest')
+                            }
                         }
                     })
                 }

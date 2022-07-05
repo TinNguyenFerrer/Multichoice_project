@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Multichoice_project</title>
+    @*<link rel="stylesheet" href="~/Multichoice_project.styles.css" asp-append-version="true" />*@
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Test/Test.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Quiz.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/lib.css" asp-append-version="true">
+
+    <script src="~/IconfontAwesome/all.min.js"> </script>
+    <link rel="stylesheet" href="~/css/Exam/Exam.css" asp-append-version="true"/>
+
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <nav class="navbar">
+                <img onclick=" window.location='/'" class="logo" src="~/img/Picture5.png">
+                <div class="navbar-collapse-menu">
+                    <ul class="navbar-nav-menu">
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Giáo dục THPT">Giáo dục THPT</a>
+                            <ul class="dropdow-menu">
+                                @*<li>
+                                <a href="#">Lớp 12</a>
+                                </li>
+                                <li>
+                                <a href="#">Lớp 11</a>
+                                </li>
+                                <li>
+                                <a href="#">Lớp 10</a>
+                                </li>*@
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Đại Học">Đại Học</a>
+                            <ul class="dropdow-menu">
+                            </ul>
+                        </li>
+
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=English Test">English Test</a>
+                            <ul class="dropdow-menu">
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=IT Test">IT Test</a>
+                            <ul class="dropdow-menu">
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Thi THPHQG">Thi THPHQG</a>
+                            <ul class="dropdow-menu">
+                            </ul>
+                        </li>
+                        <li class="navbar-nav-menu_li nav-menu-EducationalField">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Hướng Ngiệp">Hướng Ngiệp</a>
+                            <ul class="dropdow-menu">
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <div class="account-box">
+                    <div class="user-logged" onclick=" window.location='/Home/Login'">
+                        <h6>@ViewData["UserName"]</h6>
+                        <img src="/img/user_avata/UnLogin.jpg" class="rounded-cricle" alt="Circular Image" />
+                    </div>
+                </div>
+
+
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <br />
+        <br />
+        <div class="padding-top">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <br />
+        <br />
+    </div>
+
+    @*-----------------=============END List test appoint================---------------*@
+
+    <footer>
+        <div class="container">
+            <img onclick=" window.location='/'" style="margin: auto;display: block;" alt=" logo footer" src="/img/logofooter.png" height="70">
+            <div class="row" style="border-top: 1px solid #a5aff9ab;border-bottom: 1px solid #a5aff9ab;">
+                <div class=" col-3 p-3">
+                    <div class="p-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <b>Tầng 2, số nhà 541 Vũ Tông Phan, Phường Khương Đình, Quận Thanh Xuân, Thành phố Hà Nội</b>
+
+                    </div>
+
+                </div>
+                <div class="col-3 p-3">
+                    <div class="p-2">
+                        <i class="fas fa-phone-volume"></i>
+                        Phone:<b> 084 283 4585</b>
+                    </div>
+                    <div class="p-2">
+                        <i class="far fa-envelope"></i>
+                        Email: <b>vietjackteam@gmail.com</b>
+                    </div>
+                    <div class="p-2" style="font-size: 22px">
+                        <i class="fab fa-facebook-f"></i>
+                        &nbsp
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+                <div class="col-3 p-3">
+                    <h6>DANH MỤC</h6>
+                    <ul>
+                        <li><a href="#">Giáo dục THPT</a></li>
+                        <li><a href="#">Đại Học</a></li>
+                        <li><a href="#">Engish Test</a></li>
+                        <li><a href="#">IT Test</a></li>
+                        <li><a href="#">Thi THPTQL</a></li>
+                        <li><a href="#">Hướng Nghiệp</a></li>
+                    </ul>
+                </div>
+                <div class="col-3 p-3">
+                    <h6>ĐIỀU KHOẢN & DỊCH VỤ</h6>
+                    <ul>
+                        <li><a href="#">Giới Thiệu</a></li>
+                        <li><a href="#">Điều Khoản</a></li>
+                        <li><a href="#">Chính Sách</a></li>
+
+                    </ul>
+                </div>
+                @*<div class="col-3 p-3">
+                <h6> LIÊN KẾT HỮU ÍCH</h6>
+                <ul>
+                <li><a href="#">Thư viện câu hỏi hữu ích</a></li>
+                <li><a href="#">Tài liệu thanh khảo</a></li>
+                <li><a href="#">Hỏi đáp bài tập</a></li>
+
+                </ul>
+                </div>*@
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(".nav-menu-EducationalField").each(function() {
+            var _this = $(this)
+            $.ajax({
+                url: "/Home/GetSubjectByEducationalFieldName",
+                data: { EdudaionalName: $(this).find(".nav-menu-a").text() },
+                type: "POST",
+                success: function(res) {
+                    for (var i = 0; i < res.name.length; i++) {
+                        _this.find(".dropdow-menu").append(`<li>
+                                                                                                <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
+                                                                                            </li>
+                                                                                            `)
+                        console.log(_this)
+                    }
+                    console.log(res.lenght)
+                    console.log(res.name.length)
+                }
+            })
+        })
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

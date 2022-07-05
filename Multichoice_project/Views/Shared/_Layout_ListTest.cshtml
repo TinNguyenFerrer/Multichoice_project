@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="~/css/Test/Test.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Quiz.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/lib.css" asp-append-version="true">
+     <script src="~/IconfontAwesome/all.min.js"> </script>
     @*<script src="https://kit.fontawesome.com/a5ab0b4337.js" crossorigin="anonymous"></script>*@
-      <script src="~/IconfontAwesome/all.min.js"> </script>
+
 </head>
 <body>
     <div class="header">
@@ -63,11 +64,12 @@
                             </ul>
                         </li>
 
+
                     </ul>
                 </div>
                 <div class="account-box">
                     <div class="user-logged" onclick=" window.location='/Home/Login'">
-                        <h6>@ViewData["UserName"] </h6>
+                        <h6>@ViewData["UserName"]</h6>
                         <img src="/img/user_avata/UnLogin.jpg" class="rounded-cricle" alt="Circular Image" />
                     </div>
                 </div>
@@ -96,145 +98,15 @@
             </div>
         </div>
         @*</div>*@
-        <section>
-            <div class="container">
-                <div class="featued-list">
-                    <div class="col-2 ">
-                        <div class="tag ">
-                            <div class="img">
-                                <img src="~/img/tag/feature1.jpg" />
-                            </div>
-                            <h6> Đề thi học kì</h6>
-                            <p>
-                                Ngân hàng câu hỏi đầy đủ các môn cấp 1,2,3
-                                được trộn tạo đề theo cấu trúc phân loại giúp các em dễ dàng ôn tập online đề thi giữa học kỳ,
-                                thi học kỳ theo các chủ đề đã học.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-2 ">
-                        <div class="tag ">
-                            <div class="img">
-                                <img src="~/img/tag/feature2.jpg" />
-                            </div>
-                            <h6> Đề thi THPQG</h6>
-                            <p>
-                                Tổng hợp đề thi trắc nghiệm online THPT QG
-                                của các môn Toán, Tiếng Anh, Vật lý, Hóa học, Sinh học, Địa lý, Lịch sử, GDCD
-                                kèm đáp án và lời giải chi tiết.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-2 ">
-                        <div class="tag ">
-                            <div class="img">
-                                <img src="~/img/tag/feature3.jpg" />
-                            </div>
-                            <h6> Đề kiểm tra</h6>
-                            <p>
-                                Ngân hàng câu hỏi đầy đủ các môn cấp 1,2,3
-                                được trộn tạo đề theo cấu trúc phân loại giúp các em dễ dàng ôn tập online đề thi giữa học kỳ,
-                                thi học kỳ theo các chủ đề đã học.
-                            </p>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </section>
-        <section class="lession-list">
-            <div class="container">
-                @* <div class="lession lession-1">
-                <img src="/img/Lession-list/lession1.jpg" />
-                <div class="lession-box">
-                <h2>Trắc nghiệm Tiếng Anh</h2>
-                <br />
-                <p>
-                Tổng hợp hàng ngàn câu trắc nghiệm Tiếng Anh Online
-                và các đề thi chứng chỉ quốc tế TOEIC, TOEFL, IELTS
-                giúp các bạn ôn luyện và đạt điểm tốt trong các kỳ thi Tiếng Anh.
-                </p>
-                <br />
-                <a href="#">Làm ngay</a>
-                </div>
-                </div>
-                <br />
-                <br />
-                <div class="lession lession-2">
-                <img src="/img/Lession-list/lession2.jpg" />
-                <div class="lession-box">
-                <h2>Trắc nghiệm IT</h2>
-                <br />
-                <p>
-                Hệ thống các bài trắc nghiệm online về
-                tin học văn phòng, tin học cơ bản, lập trình, quản trị hệ thống, chứng chỉ quốc tế
-                giúp các bạn ôn luyện và thi các chứng chỉ về CNTT.
-                </p>
-                <br />
-                <a href="#">Làm ngay</a>
-                </div>
-                </div>*@
-
-                <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #9c9a9a54;"></button>
-                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #9c9a9a54;"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="3000">
-                            <div class="lession lession-1">
-                                <img src="/img/Lession-list/lession1.jpg" />
-                                <div class="lession-box">
-                                    <h2>Trắc nghiệm Tiếng Anh</h2>
-                                    <br />
-                                    <p>
-                                        Tổng hợp hàng ngàn câu trắc nghiệm Tiếng Anh Online
-                                        và các đề thi chứng chỉ quốc tế TOEIC, TOEFL, IELTS
-                                        giúp các bạn ôn luyện và đạt điểm tốt trong các kỳ thi Tiếng Anh.
-                                    </p>
-                                    <br />
-                                    <a href="#">Làm ngay</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-                            <div class="lession lession-2">
-                                <img src="/img/Lession-list/lession2.jpg" />
-                                <div class="lession-box">
-                                    <h2>Trắc nghiệm IT</h2>
-                                    <br />
-                                    <p>
-                                        Hệ thống các bài trắc nghiệm online về
-                                        tin học văn phòng, tin học cơ bản, lập trình, quản trị hệ thống, chứng chỉ quốc tế
-                                        giúp các bạn ôn luyện và thi các chứng chỉ về CNTT.
-                                    </p>
-                                    <br />
-                                    <a href="#">Làm ngay</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <button class="carousel-control-prev carousel_prev " type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next carousel_next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-            </div>
-        </section>
         @*-----------------=============List test appoint================---------------*@
+        <br />
+        <br />
         <section>
             <div class="container">
-                <div style="text-align: center;">
-                    <h2> Danh Sách Bài Đang Thi Nhiều</h2>
-                    <p>Cùng tham gia làm bài thi để củng cố kiến thức cũng như được vinh danh trên bảng xếp hạng của chúng tôi</p>
-                </div>
+
                 <div class="list-test-item">
+
                     @* ------------======================Body===================--------------*@
                     @RenderBody()
 
@@ -330,45 +202,7 @@
             </div>
         </section>
         @*-----------------=============END List test appoint================---------------*@
-        <section class="smart-test">
-            <div class="container">
-                <h3>TRẮC NGHIỆM THÔNG MINH</h3>
-                <div class="smart-box">
-                    <div class="green-box">
-                        <img src="/img/smart-box/smart_box1.png" />
-                        <div class="description">
-                            <h5>Đa dạng nội dung</h5>
-                            <p>Cung cấp đa dạng nội dung các câu hỏi trắc nghiệm thuộc nhiều lĩnh vực khác nhau</p>
-                        </div>
-                    </div>
-                    <div class="green-line"></div>
-                    <div class="green-box">
-                        <img src="/img/smart-box/smart_box2.png" />
-                        <div class="description">
-                            <h5>Ma trận câu hỏi</h5>
-                            <p>Hệ thống sẽ dựa vào ma trận câu hỏi phong phú để tự tổng hợp thành đề trắc nghiệm</p>
-                        </div>
-                    </div>
-                    <div class="green-line">
-                    </div>
-                    <div class="green-box">
-                        <img src="/img/smart-box/smart_box3.png" />
-                        <div class="description">
-                            <h5>Đáp án chi tiết</h5>
-                            <p>Sau khi hoàn thành bài kiểm tra trắc nghiệm hệ thống sẽ thông báo số điểm đạt được kèm lời giải chi tiết</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="padding-top">
-                    <main role="main" class="pb-3">
 
-
-                    </main>
-                </div>
-            </div>
-        </section>
         <footer>
             <div class="container">
                 <img onclick=" window.location='/'" style="margin: auto;display: block;" alt=" logo footer" src="/img/logofooter.png" height="70">
@@ -444,9 +278,9 @@
                 success: function(res) {
                     for (var i = 0; i < res.name.length; i++) {
                         _this.find(".dropdow-menu").append(`<li>
-                                                                <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
-                                                            </li>
-                                                            `)
+                                                                        <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
+                                                                    </li>
+                                                                    `)
                         console.log(_this)
                     }
                     console.log(res.lenght)

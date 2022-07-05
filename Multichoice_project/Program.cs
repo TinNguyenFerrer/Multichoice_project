@@ -11,7 +11,7 @@ builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(2);
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
 });
 
 //tránh vòng lặp

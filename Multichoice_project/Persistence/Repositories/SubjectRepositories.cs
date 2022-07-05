@@ -18,5 +18,13 @@ namespace Multichoice_project.Persistence.Repositories
                     where subject.EducationalFieldId==idEdu
                     select subject);
         }
+        public IEnumerable<Subject> GetSubjectByEducationFieldName(string EduName)
+        {
+            return (from subject in this.GetAll()
+                    join educationalfield in this.DbContext.EducationalFields 
+                    on subject.EducationalField.Name equals educationalfield.Name
+                    where educationalfield.Name == EduName
+                    select subject);
+        }
     }
 }

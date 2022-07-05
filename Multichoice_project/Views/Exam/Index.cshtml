@@ -1,8 +1,9 @@
 ﻿@using Multichoice_project.Models;
 @using System.Web
 @{
+    ViewData["UserName"] = ViewBag.UserNameDisplay;
     ViewData["Title"] = "Exam";
-    Layout = "~/Views/Shared/_LayoutExam.cshtml";
+    Layout = "~/Views/Shared/_Layout_Exam.cshtml";
     var u = ViewBag.Model;
     Int32 i = 1;
 

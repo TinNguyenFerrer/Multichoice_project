@@ -1,8 +1,9 @@
-﻿@{
+﻿
+@{
     ViewData["UserName"] = ViewBag.UserNameDisplay;
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var test = (List<Test>)ViewBag.Model;
+    ViewData["Title"] = "Subject";
+    Layout = "~/Views/Shared/_Layout_ListTest.cshtml"; 
+    var test = (List<Test>)ViewData.Model;
     var i = 0;
 }
 
@@ -38,3 +39,4 @@
     </a>
     if(i==6) break;
 }
+

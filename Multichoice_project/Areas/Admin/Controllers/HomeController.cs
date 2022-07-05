@@ -48,7 +48,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
         }
         [HttpPost]
 
-        public async void SaveTest()
+        public async Task<IActionResult> SaveTest()
         {
 
             string body = "";
@@ -101,7 +101,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
             _unitOfWork.SaveChange();
 
             //Console.WriteLine(t?.GetProperty("listQues"));
-
+            return Json(new {code = 200 });
         }
         public IActionResult AllTest()
         {
@@ -322,7 +322,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
         {
             _unitOfWork.SubjectRepository.Insert(subject);
             _unitOfWork.SaveChange();
-            return RedirectToAction(nameof(AllSubject));
+            return RedirectToAction(nameof(CreateSubject));
         }
         public IActionResult EditSubject(int id)
         {

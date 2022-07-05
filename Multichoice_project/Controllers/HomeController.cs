@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Multichoice_project.Models;
 using System.Diagnostics;
-using Multichoice_project.Repositories;
+using Multichoice_project.Persistence;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
@@ -41,9 +41,11 @@ namespace Multichoice_project.Controllers
             ViewBag.Model = data.ToList();
             if (data.Any())
             {
+                ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
                 data.ToList();
                 return View(data);
             }
+            ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName")!=null ? "Hi!.."+ HttpContext.Session.GetString("UserName") : "Đăng nhập!";
             return View();
         }
 
@@ -106,6 +108,18 @@ namespace Multichoice_project.Controllers
                 }
 
             }
+        }
+        public JsonResult GetSubjectByEducationalFieldName (string EdudaionalName)
+        {
+            Console.WriteLine("------------" + EdudaionalName);
+            var subject = _UnitOfWork.SubjectRepository.GetSubjectByEducationFieldName(EdudaionalName);
+            List<string> NameSubject = new List<string>();
+            foreach(var item in subject)
+            {
+                NameSubject.Add(item.Name);
+            }
+
+            return Json(new { name = NameSubject.ToArray() });
         }
 
     }

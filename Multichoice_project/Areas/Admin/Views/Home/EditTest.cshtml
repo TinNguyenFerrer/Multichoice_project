@@ -21,7 +21,7 @@
         <div class="card mb-3 mb-md-4">
             <div class=" " style="min-height:100%">
                 <button type="button" class="btn btn-primary btn-sm fixedAddQuestion AddQuestion">
-                    <i class="fa-solid fa-plus"></i>
+                    <i class="fas fa-plus-circle"></i>
                     &nbsp; New Quesion
                 </button>
                 <button type="button" onclick="submitTest()" class="btn btn-sm fixedSaveTest">
@@ -396,7 +396,11 @@
                         contentType: "Application/json;charset=utf-8",
                         success: function(res) {
                             console.log("Update ListIdQuestion success")
-                            console.log()
+                            console.log("------------respon200------------")
+                            console.log(res.code)
+                            if(res.code==200){
+                                $(window).attr('location','/Admin/Home/AllTest')
+                            }
                         }
                     })
                     $.ajax({

@@ -22,7 +22,7 @@ namespace Multichoice_project.Controllers
             if (data.Any())
             {
                 data.ToList();
-
+                ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
                 return View(data);
             }
 
@@ -40,6 +40,7 @@ namespace Multichoice_project.Controllers
             {
                 ViewBag.Model = datatest;
                 ViewBag.question = dataquestion;
+                ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
                 return View();
             }
 
@@ -72,7 +73,33 @@ namespace Multichoice_project.Controllers
                            }).ToList();
             return Json(new { code = 200, answerslist = answers });
         }
+        public IActionResult Subject(string SubjectName)
+        {
+            var IdSub = (from Sub in _UnitOfwork.SubjectRepository.GetAll()
+                         where  Equals(Sub.Name.Trim(),SubjectName.Trim())
+                         select Sub.Id);
+            var id = IdSub.FirstOrDefault();
+            var ListTest = _UnitOfwork.TestRepository.GetListByIdSubjectId(id).ToList();
+            ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
+            return View(ListTest);
+        }
+        public IActionResult EducationalField(string EduFieldName)
+        {
+            var IdEdu = (from Edu in _UnitOfwork.EducationalFieldRepository.GetAll()
+                         where Equals(Edu.Name.Trim(), EduFieldName.Trim())
+                         select Edu.Id);
+            var IdEducationalField = IdEdu.FirstOrDefault();
 
+            var ListSubject = _UnitOfwork.SubjectRepository.GetSubjectByEducationFieldId(IdEducationalField).ToList();
+            List<Test> ListTest = new List<Test>();
+            foreach (var Item in ListSubject)
+            {
+                ListTest.AddRange(_UnitOfwork.TestRepository.GetListByIdSubjectId(Item.Id).ToList());
+            }
+            ViewBag.IdEduc = IdEducationalField;
+            ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
+            return View(ListTest);
+        }
 
     }
 }
