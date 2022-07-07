@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Multichoice_project.Models;
+using Multichoice_project.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,7 +13,7 @@ builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
 });
 
 //tránh vòng lặp
@@ -19,6 +21,8 @@ builder.Services.AddControllersWithViews();
 
 //builder.Services.AddSession();
 builder.Services.AddDbContext<Multichoise_DBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
+
+builder.Services.AddRepository();
 
 var app = builder.Build();
 

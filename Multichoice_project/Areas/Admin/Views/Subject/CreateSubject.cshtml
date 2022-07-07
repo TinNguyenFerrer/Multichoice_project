@@ -3,11 +3,11 @@
     ViewData["Title"] = "Subject";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var i = 1;
-     ViewData["UserLogin"] = ViewBag.UserLogin;
+    ViewData["UserLogin"] = ViewBag.UserLogin;
     ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["Subject-active"] = "active";
-    ViewData["Subject-all"] = "active";
+    ViewData["Subject-add-new"] = "active";
     ViewData["Nav-open-subject"] = "side-nav-opened";
     ViewData["Display-submenu-subject"] = "display: block";
 }
@@ -34,32 +34,24 @@
 
         <!-- Form -->
         <div>
-            <form action="/Admin/Home/EditSubject" method="post">
+            <form action="/Admin/Subject/CreateSubject" method="post">
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label for="name">Name Subject</label>
-                        <input type="text" class="form-control" value="@ViewBag.Subject.Name" id="name" name="Name" placeholder="Subject Name" required>
-                        <input type="text" class="form-control d-none" value="@ViewBag.Subject.Id" id="id" name="Id">
+                        <input type="text" class="form-control" value="" id="name" maxlength="20"  name="Name" placeholder="Subject Name" required>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label for="Educational-field">Educational Field</label>
                         <select id="Educational-field" name="EducationalFieldId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                             @foreach (EducationalField edu in ViewBag.Educational_field)
                             {
-                                if (edu.Id == ViewBag.Subject.EducationalFieldId)
-                                {
-                                    <option value="@edu.Id" selected>@edu.Name</option>
-                                }
-                                else{
-                                    <option value="@edu.Id">@edu.Name</option>
-                                }
-
+                                <option value="@edu.Id">@edu.Name</option>
                             }
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary float-right">Edit</button>
+                <button type="submit" class="btn btn-primary float-right">Add</button>
             </form>
         </div>
         <!-- End Form -->

@@ -68,7 +68,7 @@ namespace Multichoice_project.Controllers
         [HttpPost]
         public IActionResult Register( User user)
         {
-            user.RoleName = "Admin";
+            user.RoleName = "User";
             user.PassWord = GetMD5(user.PassWord);
             _UnitOfWork.UserRepository.Insert(user);
             _UnitOfWork.SaveChange();

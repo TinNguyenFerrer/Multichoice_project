@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/css/lib.css" asp-append-version="true">
 
     <script src="~/IconfontAwesome/all.min.js"> </script>
-    <link rel="stylesheet" href="~/css/Exam/Exam.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Exam/Exam.css" asp-append-version="true" />
 
 </head>
 <body>
@@ -25,44 +25,52 @@
                 <div class="navbar-collapse-menu">
                     <ul class="navbar-nav-menu">
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
-                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Giáo dục THPT">Giáo dục THPT</a>
-                            <ul class="dropdow-menu">
-                                @*<li>
-                                <a href="#">Lớp 12</a>
-                                </li>
-                                <li>
-                                <a href="#">Lớp 11</a>
-                                </li>
-                                <li>
-                                <a href="#">Lớp 10</a>
-                                </li>*@
-                            </ul>
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Trắc Nghiệm THPT">Trắc Nghiệm THPT</a>
+                            <div class="dropdow-menu">
+                                <ul class="row">
+
+                                    @*<li>
+                                    <a href="#">Lớp 12</a>
+                                    </li>
+                                    <li>
+                                    <a href="#">Lớp 11</a>
+                                    </li>
+                                    <li>
+                                    <a href="#">Lớp 10</a>
+                                    </li>*@
+                                </ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Đại Học">Đại Học</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
 
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=English Test">English Test</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=IT Test">IT Test</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Thi THPHQG">Thi THPHQG</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Hướng Ngiệp">Hướng Ngiệp</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
 
 
@@ -169,10 +177,10 @@
                 type: "POST",
                 success: function(res) {
                     for (var i = 0; i < res.name.length; i++) {
-                        _this.find(".dropdow-menu").append(`<li>
-                                                                                                <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
-                                                                                            </li>
-                                                                                            `)
+                        _this.find(".dropdow-menu").find("ul").append(`<li class="col-6">
+                                                                                                        <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
+                                                                                                    </li>
+                                                                                                    `)
                         console.log(_this)
                     }
                     console.log(res.lenght)

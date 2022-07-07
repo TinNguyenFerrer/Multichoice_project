@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Multichoice_project.Models;
-namespace Multichoice_project.Repositories
+namespace Multichoice_project.GenericRepositories
 {
     public class Repositories<T> : IRepositories<T> where T : class
     {
@@ -24,7 +24,7 @@ namespace Multichoice_project.Repositories
 
         public void Delete(int ID)
         {
-            T exist = Dbset.Find(ID);
+            T? exist = Dbset.Find(ID);
             if (exist != null)
             {
                 Dbset.Remove(exist);
@@ -37,7 +37,7 @@ namespace Multichoice_project.Repositories
             return Dbset.AsEnumerable();
         }
 
-        public T GetByID(int id)
+        public T? GetByID(int id)
         {
             return Dbset.Find(id);
         }

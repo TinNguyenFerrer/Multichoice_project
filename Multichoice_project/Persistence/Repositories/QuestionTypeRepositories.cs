@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Multichoice_project.Core.Repositories;
 using Multichoice_project.Models;
-using Multichoice_project.Repositories;
+using Multichoice_project.GenericRepositories;
 
 namespace Multichoice_project.Persistence.Repositories
 {

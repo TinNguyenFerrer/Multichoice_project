@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/Quiz.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/lib.css" asp-append-version="true">
     @*<script src="https://kit.fontawesome.com/a5ab0b4337.js" crossorigin="anonymous"></script>*@
-      <script src="~/IconfontAwesome/all.min.js"> </script>
+    <script src="~/IconfontAwesome/all.min.js"> </script>
 </head>
 <body>
     <div class="header">
@@ -23,8 +23,9 @@
                 <div class="navbar-collapse-menu">
                     <ul class="navbar-nav-menu">
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
-                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Giáo dục THPT">Giáo dục THPT</a>
-                            <ul class="dropdow-menu">
+                            <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Trắc Nghiệm THPT">Trắc Nghiệm THPT</a>
+                            <div class="dropdow-menu ">
+                                <ul class="row"></ul>
                                 @*<li>
                                 <a href="#">Lớp 12</a>
                                 </li>
@@ -34,33 +35,38 @@
                                 <li>
                                 <a href="#">Lớp 10</a>
                                 </li>*@
-                            </ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Đại Học">Đại Học</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
 
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=English Test">English Test</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=IT Test">IT Test</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Thi THPHQG">Thi THPHQG</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
                         <li class="navbar-nav-menu_li nav-menu-EducationalField">
                             <a class=" nav-menu-a" href="/Test/EducationalField?EduFieldName=Hướng Ngiệp">Hướng Ngiệp</a>
-                            <ul class="dropdow-menu">
-                            </ul>
+                            <div class="dropdow-menu">
+                                <ul class="row"></ul>
+                            </div>
                         </li>
 
                     </ul>
@@ -88,8 +94,10 @@
                     </h1>
                     <p>Hệ thống các câu hỏi trắc nghiệm các lĩnh vực giáo dục và hướng nghiệp , kỹ năng mềm ...</p>
                     <div class="search">
-                        <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?">
-                        <button class="btn btn-primary search-btn blue_search">Tìm Kiếm</button>
+                        <form action="/Test/Search" method="post">
+                            <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?" name="KeyWord">
+                            <button type="submit" class="btn btn-primary search-btn blue_search">Tìm Kiếm</button>
+                        </form>
                     </div>
 
                 </div>
@@ -100,20 +108,20 @@
             <div class="container">
                 <div class="featued-list">
                     <div class="col-2 ">
-                        <div class="tag ">
+                        <div class="tag " onclick="window.location='/Test/EducationalField?EduFieldName=Đại Học'">
                             <div class="img">
                                 <img src="~/img/tag/feature1.jpg" />
                             </div>
-                            <h6> Đề thi học kì</h6>
+                            <h6> Đề thi Đại Học</h6>
                             <p>
-                                Ngân hàng câu hỏi đầy đủ các môn cấp 1,2,3
+                                Ngân hàng câu hỏi đầy đủ các môn Đại Cương
                                 được trộn tạo đề theo cấu trúc phân loại giúp các em dễ dàng ôn tập online đề thi giữa học kỳ,
                                 thi học kỳ theo các chủ đề đã học.
                             </p>
                         </div>
                     </div>
                     <div class="col-2 ">
-                        <div class="tag ">
+                        <div class="tag " onclick="window.location='/Test/EducationalField?EduFieldName=Thi THPHQG'">
                             <div class="img">
                                 <img src="~/img/tag/feature2.jpg" />
                             </div>
@@ -126,8 +134,8 @@
                         </div>
                     </div>
                     <div class="col-2 ">
-                        <div class="tag ">
-                            <div class="img">
+                        <div class="tag " onclick="window.location='/Test/EducationalField?EduFieldName=Trắc Nghiệm THPT'">
+                            <div class="img" >
                                 <img src="~/img/tag/feature3.jpg" />
                             </div>
                             <h6> Đề kiểm tra</h6>
@@ -193,7 +201,7 @@
                                         giúp các bạn ôn luyện và đạt điểm tốt trong các kỳ thi Tiếng Anh.
                                     </p>
                                     <br />
-                                    <a href="#">Làm ngay</a>
+                                    <a href="/Test/EducationalField?EduFieldName=English Test">Làm ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +217,7 @@
                                         giúp các bạn ôn luyện và thi các chứng chỉ về CNTT.
                                     </p>
                                     <br />
-                                    <a href="#">Làm ngay</a>
+                                    <a href="/Test/EducationalField?EduFieldName=IT Test">Làm ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -443,10 +451,10 @@
                 type: "POST",
                 success: function(res) {
                     for (var i = 0; i < res.name.length; i++) {
-                        _this.find(".dropdow-menu").append(`<li>
-                                                                <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
-                                                            </li>
-                                                            `)
+                        _this.find(".dropdow-menu").find("ul").append(`<li class="col-6">
+                                                                        <a href="/Test/Subject?SubjectName=${res.name[i]}">${res.name[i]}</a>
+                                                                    </li>
+                                                                    `)
                         console.log(_this)
                     }
                     console.log(res.lenght)

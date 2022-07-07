@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Multichoice_project.Models;
-namespace Multichoice_project.Repositories
+namespace Multichoice_project.GenericRepositories
 {
     public interface IRepositories<T> where T : class
     {
@@ -13,7 +13,7 @@ namespace Multichoice_project.Repositories
         Multichoise_DBContext DbContext { get; set; }
 
         IEnumerable<T> GetAll();
-        T GetByID(int id);
+        T? GetByID(int id);
         void Insert(T TEntity);
         void Update(T TEntity);
         void Delete(int ID);

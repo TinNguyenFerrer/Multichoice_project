@@ -149,7 +149,8 @@ namespace Multichoice_project.Migrations
                         name: "FK_Results_Tests_TestId",
                         column: x => x.TestId,
                         principalTable: "Tests",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Results_Users_UserId",
                         column: x => x.UserId,

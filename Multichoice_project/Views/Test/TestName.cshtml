@@ -6,12 +6,12 @@
     Layout = "~/Views/Shared/_Layout_Exam.cshtml";
     var u = ViewBag.Model;
     Int32 i = 1;
-    
+
 }
-<br />
+
 <h4 class="title-test">@u.Name</h4>
-<p>@u.Description</p>
-<h5 class="time-to-do-test"><i class="fas fa-stopwatch"></i> :@u.Time (phút)</h5>
+<p style="text-align:center">@u.Description</p>
+<h5 class="time-to-do-test"><i class="far fa-clock"></i> :@u.Time (phút)</h5>
 <br />
 <div class="container px-4 border rounded ">
 
@@ -22,11 +22,11 @@
             <script type="text/javascript">
                 var t = '@question.Content'
                 var parser = new DOMParser;
-                var dom = parser.parseFromString('<!doctype html><body>' + t,'text/html');
+                var dom = parser.parseFromString('<!doctype html><body>' + t, 'text/html');
                 var decodedString = dom.body.textContent;
-                document.getElementById("@question.Id-idforques").innerHTML=decodedString
-                console.log( decodedString);
-                
+                document.getElementById("@question.Id-idforques").innerHTML = decodedString
+                console.log(decodedString);
+
             </script>
             @{
                 i = i + 1;
@@ -44,10 +44,12 @@
         </div>
         <hr width="100%" align="center" />
     }
+    <div class="d-grid gap-2">
+        <button onclick="window.location='/Exam/Index?id=@u.Id'" class="btn btn-warning" type="button">Vào Thi</button>
+    </div>
+    <br />
 </div>
-<div class="d-grid gap-2">
-  <button onclick="window.location='/Exam/Index?id=@u.Id'" class="btn btn-warning" type="button">Vào Thi</button>
-</div>
+
 <br />
 
 @section Scripts{

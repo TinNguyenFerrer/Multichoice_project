@@ -30,9 +30,9 @@
                 </button>
                 <div class="properties-test">
                     <label class="d-block fw-bolder" for="name-test"> Name Test:</label>
-                    <input type="text" class="form-control name-test" id="name-test" value="@ViewBag.Test.Name">
+                    <input type="text" class="form-control name-test" id="name-test" value="@ViewBag.Test.Name" maxlength="80">
                     <span class="fw-bolder">Time: </span>
-                    <input type="number" class="form-control time" value="@ViewBag.Test.Time">
+                    <input type="number" class="form-control time" value="@ViewBag.Test.Time" maxlength="3">
                     <span>(Minutes)</span>
                     <br />
                     <label class="fw-bolder d-inline-block" for="subject"> Subject Name:</label>
@@ -115,7 +115,7 @@
         })
         //-----------lấy nội dung test--------------
         $.ajax({
-            url: '/Admin/Home/GetQuestionsByIdTest/' + @ViewBag.Test.Id,
+            url: '/Admin/Test/GetQuestionsByIdTest/' + @ViewBag.Test.Id,
             dataType: 'json',
             type: 'GET',
             success: function(data) {
@@ -341,7 +341,7 @@
                     var idQues = $(this).find(".question-content").attr("id")
                     if (quesI == "") {
                         alert("chưa có câu hỏi tại câu "+$(this).find("B").first().text())
-                        var stop = false
+                        stop = false
                     }
                     var answI = []
                     var rightAnswer = -1
@@ -360,8 +360,9 @@
                         }
                     })
                     if (rightAnswer == -1) {
-                        alert("Chưa check đáp án "+$(this).find("b").text())
+                        alert("Chưa check đáp án i "+$(this).find("b").text())
                         stop = false;
+                        console.log(stop)
                     }
                     console.log(answI)
                     console.log(quesI)
@@ -383,13 +384,12 @@
                     listQues: test
                 })
                 console.log("----jsonTest----")
-                console.log(jsonTest)
-                console.log("----idquesDelete----")
-                console.log(idquesDelete)
                 console.log(JSON.stringify({ listidques: idquesDelete }),)
+                console.log("----stop----")
+                console.log(stop)
                 if (stop) {
                     $.ajax({
-                        url: "/Admin/Home/EditTest",
+                        url: "/Admin/Test/EditTest",
                         data: jsonTest,
                         type: "POST",
                         dataType: "json",

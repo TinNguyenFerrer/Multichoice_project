@@ -35,9 +35,9 @@
                 </button>
                 <div class="properties-test">
                     <label class="d-block fw-bolder" for="name-test"> Name Test:</label>
-                    <input type="text" class="form-control name-test" id="name-test">
+                    <input type="text" class="form-control name-test" id="name-test" maxlength="80" >
                     <span class="fw-bolder">Time: </span>
-                    <input type="number" class="form-control time">
+                    <input type="number" class="form-control time" maxlength="3">
                     <span>(Minutes)</span>
                     <br />
                     <label class="fw-bolder d-inline-block" for="subject"> Subject Name:</label>
@@ -51,7 +51,7 @@
                     </select>
 
                     <label class="d-block fw-bolder" for="Description"> Description:</label>
-                    <textarea class="form-control description" aria-label="With textarea" id="Description"></textarea>
+                    <textarea class="form-control description" aria-label="With textarea" id="Description" maxlength="150"></textarea>
                 </div>
                 <br />
                 <div class="text-start px-5 test-content">
@@ -258,7 +258,7 @@
                     var quesI = $(this).find(".question-content").html()
                     if (quesI == "") {
                         alert("chưa có câu hỏi tại câu "+$(this).find("B").first().text())
-                        var stop = false
+                        stop = false
                     }
                     var answI = []
                     var rightAnswer = -1
@@ -285,8 +285,10 @@
                         }
                     })
                     if (rightAnswer == -1) {
-                        alert("Chưa check đáp án "+$(this).find("b").text())
+                        alert("Chưa check đáp án i  "+$(this).find("b").text())
                         stop = false;
+                        console.log(stop)
+                        return;
                     }
                     console.log(answI)
                     console.log(quesI)
@@ -307,9 +309,10 @@
                 })
                 console.log("--------")
                 console.log(jsonTest)
+                console.log(stop)
                 if (stop) {
                     $.ajax({
-                        url: "/Admin/Home/SaveTest",
+                        url: "/Admin/Test/SaveTest",
                         data: jsonTest,
                         type: "POST",
                         dataType: "json",
@@ -318,7 +321,7 @@
                             console.log("------------respon200------------")
                             console.log(res.code)
                             if(res.code==200){
-                                $(window).attr('location','/Admin/Home/AllTest')
+                                $(window).attr('location','/Admin/Test/AllTest')
                             }
                         }
                     })

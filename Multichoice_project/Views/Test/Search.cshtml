@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["UserName"] = ViewBag.UserNameDisplay;
+    ViewData["Title"] = "EducationField";
+    Layout = "~/Views/Shared/_Layout_ListTest.cshtml"; 
+    var test = (List<Test>)ViewData.Model;
+    int i;
+    try
+    {
+        i = ViewBag.IdEduc % 7;
+    }
+    catch
+    {
+        i = 1;
+    }
+}
+
+@foreach (var t in test)
+{
+    
+    <a href="/Test/TestName/@t.Link" style=" color: #343434;text-decoration: none;">
+        <div class="card mb-3 " style="width: 500px; height: 160px;overflow:hidden">
+            <div class="row g-0 row-item">
+                <div class="col-md-6 height_100">
+                    <div class="linear-gradient-@i">
+                        <p class="linear-gra_p">@t.Name </p>
+                    </div>
+                </div>
+                <div class="col-md-6 height_100">
+                    <div class="card-body">
+                        <h5 class="card-title">@t.Name </h5>
+                        <p class="card-text">@t.Description  </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt"></i> :@t.Hits (lượt thi)
+                                &nbsp
+                                &nbsp
+                                &nbsp
+                                &nbsp
+                                <i class="far fa-clock"></i> : @t.Time (phút)
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    
+}
+

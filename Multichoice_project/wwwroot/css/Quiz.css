@@ -180,6 +180,9 @@ input[type=text]:focus {
     padding-bottom: 5px;
     border-radius: 0px;
 }
+    .dropdow-menu ul{
+        padding-left:0px;
+    }
 
     .dropdow-menu::before {
         position: absolute;
@@ -193,14 +196,16 @@ input[type=text]:focus {
     }
 
     .dropdow-menu li {
-        transition: padding-left ease .4s 0s, left .3s ease 0s;
-        display: block;
+        transition: all ease .4s 0s, left .3s ease 0s;
+        display: inline-block;
         z-index: 10;
-        min-width: 150px;
-        padding: 10px 10px 5px 10px;
-        margin-left: 2px;
-        border-bottom: 1px solid #e4e8ec;
+        /*min-width: 150px;*/
+        padding: 10px 2px 5px 20px;
+        margin-left: 0px;
+        margin-right: 0px;
+        /*border-bottom: 1px solid #e4e8ec;*/
     }
+
 
         .dropdow-menu li:last-child {
             border-bottom: none
@@ -211,14 +216,14 @@ input[type=text]:focus {
 
 .navbar-nav-menu_li:hover .dropdow-menu {
     opacity: 1;
-    width: auto;
+    width: 360px;
     height: auto;
     transition: opacity ease .5s;
     overflow: initial;
 }
 
 .dropdow-menu li:hover {
-    padding-left: 20px;
+    transform:translateX(5px);
     color: #328cfc;
 }
 
@@ -347,10 +352,12 @@ section {
 
 .carousel_prev {
     justify-content: flex-start;
+    width: 5%;
 }
 
 .carousel_next {
     justify-content: flex-end;
+    width: 5%;
 }
 
 .list-test-item {

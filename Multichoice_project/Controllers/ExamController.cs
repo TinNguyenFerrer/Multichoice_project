@@ -37,6 +37,7 @@ namespace Multichoice_project.Controllers
             {
                 ViewBag.Model = datatest;
                 ViewBag.question = dataquestion;
+                ViewBag.NumberQuestion = dataquestion.Count();
                 ViewBag.UserNameDisplay = HttpContext.Session.GetString("UserName") != null ? "Hi!.." + HttpContext.Session.GetString("UserName") : "Đăng nhập!";
                 return View();
             }
