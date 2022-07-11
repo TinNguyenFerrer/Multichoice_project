@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'QuizMake'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C2BB7C8DB9B04524BDD206644B55619F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ABD97DD6FA094C60BD78C26123B09CDF }}
           package: .
