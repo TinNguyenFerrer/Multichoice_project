@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Multichoice_project.Core;
 using Multichoice_project.Models;
 using Multichoice_project.Persistence;
 using System.Text.Json;
@@ -12,11 +13,11 @@ namespace Multichoice_project.Areas.Admin.Controllers
     public class HomeController : Controller
     {
 
-        private UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<HomeController> _logger;
-        public HomeController(Multichoise_DBContext dbcontext)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(dbcontext);
+            _unitOfWork = unitOfWork;
         }
         //bỏ dấu tiếng việt
         public string RemoveVietnameseTone(string text)

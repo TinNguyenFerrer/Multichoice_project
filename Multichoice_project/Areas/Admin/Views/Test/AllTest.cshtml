@@ -3,7 +3,11 @@
     ViewData["Title"] = "CreateTest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     //tên user
-    ViewData["UserLogin"] = ViewBag.UserLogin;
+    if (ViewBag.UserLogin != null)
+    {
+        ViewData["UserLogin"] = ViewBag.UserLogin;
+    }
+
     ViewData["UserLoginFirst"] = ViewBag.UserLogin[0];
 
     ViewData["Test-active"]="active";
@@ -44,33 +48,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Test test in ViewBag.Test)
+                        @if (ViewBag.Test != null)
                         {
-                            <tr>
-                                <td class="py-3">@test.Id</td>
-                                <td class="align-middle py-3">
-                                    <div class=" align-items-center" style="width:400px; overflow-x: auto;">
+                            foreach (Test test in ViewBag.Test)
+                            {
+                                <tr>
+                                    <td class="py-3">@test.Id</td>
+                                    <td class="align-middle py-3">
+                                        <div class=" align-items-center" style="width:400px; overflow-x: auto;">
 
-                                        @test.Name
-                                        
-                                    </div>
-                                </td>
-                                <td class="py-3">@test.Time (minute)</td>
-                                <td class="py-3">@test.CreatedTime</td>
-                                @*<td class="py-3">
+                                            @test.Name
+
+                                        </div>
+                                    </td>
+                                    <td class="py-3">@test.Time (minute)</td>
+                                    <td class="py-3">@test.CreatedTime</td>
+                                    @*<td class="py-3">
                                     <span class="badge badge-pill badge-success">Verified</span>
                                 </td>*@
-                                <td class="py-3">
-                                    <div class="position-relative">
-                                        <a class="link-dark d-inline-block" href="/Admin/Test/EditTest/@test.Id">
-                                            <i class="gd-pencil icon-text"></i>
-                                        </a>
-                                        <a class="link-dark d-inline-block" href="/Admin/Test/DeleteTest/@test.Id">
-                                            <i class="gd-trash icon-text"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                    <td class="py-3">
+                                        <div class="position-relative">
+                                            <a class="link-dark d-inline-block" href="/Admin/Test/EditTest/@test.Id">
+                                                <i class="gd-pencil icon-text"></i>
+                                            </a>
+                                            <a class="link-dark d-inline-block" href="/Admin/Test/DeleteTest/@test.Id">
+                                                <i class="gd-trash icon-text"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

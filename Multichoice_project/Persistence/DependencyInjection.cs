@@ -11,15 +11,15 @@ namespace Multichoice_project.Persistence
     {
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IAnswerRepositories, AnswerRepositories>();
-            services.AddTransient<IEducationalFieldRepositories, EducationalFieldRepositories>();
-            services.AddTransient<IQuestionRepositories, QuestionRepositories>();
-            services.AddTransient<IQuestionTypeRepositories, QuestionTypeRepositories>();
-            services.AddTransient<IResultRepositories, ResultRepositories>();
-            services.AddTransient<ISubjectRepositories, SubjectRepositories>();
-            services.AddTransient<ITestRepositories, TestRepositories>();
-            services.AddTransient<IUserRepositories, UserRepositories>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAnswerRepositories, AnswerRepositories>();
+            services.AddScoped<IEducationalFieldRepositories, EducationalFieldRepositories>();
+            services.AddScoped<IQuestionRepositories, QuestionRepositories>();
+            services.AddScoped<IQuestionTypeRepositories, QuestionTypeRepositories>();
+            services.AddScoped<IResultRepositories, ResultRepositories>();
+            services.AddScoped<ISubjectRepositories, SubjectRepositories>();
+            services.AddScoped<ITestRepositories, TestRepositories>();
+            services.AddScoped<IUserRepositories, UserRepositories>();
             return services;
         }
     }

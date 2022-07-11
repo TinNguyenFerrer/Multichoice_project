@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Multichoice_project.Core;
 using Multichoice_project.Models;
 using Multichoice_project.Persistence;
 
@@ -7,10 +8,10 @@ namespace Multichoice_project.Areas.Admin.Controllers
     [Area("Admin")]
     public class SubjectController : Controller
     {
-        private UnitOfWork _unitOfWork;
-        public SubjectController(Multichoise_DBContext dbcontext)
+        private readonly IUnitOfWork _unitOfWork;
+        public SubjectController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(dbcontext);
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {

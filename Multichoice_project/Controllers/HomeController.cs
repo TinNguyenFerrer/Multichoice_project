@@ -6,17 +6,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using System;
-
+using Multichoice_project.Core;
 
 namespace Multichoice_project.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private UnitOfWork _UnitOfWork;
-        public HomeController(Multichoise_DBContext dbcontext)
+        private readonly IUnitOfWork _UnitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _UnitOfWork =new UnitOfWork(dbcontext);
+            _UnitOfWork = unitOfWork;
         }
         public static string GetMD5(string str)
         {

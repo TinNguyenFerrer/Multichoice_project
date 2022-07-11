@@ -24,17 +24,25 @@ namespace Multichoice_project.Persistence
         public ITestRepositories TestRepository { get; set; }
 
         public IUserRepositories UserRepository { get; set; }
-        public UnitOfWork(Multichoise_DBContext _DBContext)
+        public UnitOfWork(Multichoise_DBContext _DBContext, 
+            IAnswerRepositories answerRepositories, 
+            IEducationalFieldRepositories educationalFieldRepositories,
+            IQuestionTypeRepositories questionTypeRepositories,
+            IResultRepositories resultRepositories,
+            IQuestionRepositories questionRepositories,
+            ISubjectRepositories subjectRepositories,
+            ITestRepositories testRepositories,
+            IUserRepositories userRepositories)
         {
-            dbcontext = _DBContext;
-            this.AnswerRepository = new AnswerRepositories(dbcontext);
-            this.EducationalFieldRepository = new EducationalFieldRepositories(dbcontext);
-            this.QuestionTypeRepository = new QuestionTypeRepositories(dbcontext);
-            this.ResultRepository = new ResultRepositories(dbcontext);
-            this.QuestionRepository = new QuestionRepositories(dbcontext);
-            this.SubjectRepository = new SubjectRepositories(dbcontext);
-            this.TestRepository = new TestRepositories(dbcontext);
-            this.UserRepository = new UserRepositories(dbcontext);
+            this.dbcontext = _DBContext;
+            this.AnswerRepository = answerRepositories;
+            this.EducationalFieldRepository = educationalFieldRepositories;
+            this.QuestionTypeRepository = questionTypeRepositories;
+            this.ResultRepository = resultRepositories;
+            this.QuestionRepository = questionRepositories;
+            this.SubjectRepository = subjectRepositories;
+            this.TestRepository = testRepositories;
+            this.UserRepository = userRepositories;
         }
 
         public void Dispose()

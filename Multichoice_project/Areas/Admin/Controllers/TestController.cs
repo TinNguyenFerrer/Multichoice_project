@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Multichoice_project.Core;
 using Multichoice_project.Models;
 using Multichoice_project.Persistence;
 using System.Text.Json.Nodes;
@@ -9,10 +10,10 @@ namespace Multichoice_project.Areas.Admin.Controllers
     [Area("Admin")]
     public class TestController : Controller
     {
-        private UnitOfWork _unitOfWork;
-        public TestController(Multichoise_DBContext dbcontext)
+        private readonly IUnitOfWork _unitOfWork;
+        public TestController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(dbcontext);
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {

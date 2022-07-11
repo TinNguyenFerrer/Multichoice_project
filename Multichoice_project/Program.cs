@@ -22,8 +22,10 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddSession();
 builder.Services.AddDbContext<Multichoise_DBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 
+//Register Service 
 builder.Services.AddRepository();
-
+// Register MemoryCache
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,7 +59,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "MyArea",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area:exists}/{controller=Home}/{action=Login}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

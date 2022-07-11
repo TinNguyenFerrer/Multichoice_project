@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Multichoice_project.Core;
 using Multichoice_project.Models;
 using Multichoice_project.Persistence;
 using System.Text.Json;
@@ -11,13 +12,10 @@ namespace Multichoice_project.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
-        private UnitOfWork _unitOfWork;
-        private readonly ILogger<HomeController> _logger;
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public UserController(Multichoise_DBContext dbcontext)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private readonly IUnitOfWork _unitOfWork;
+        public UserController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork(dbcontext);
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
@@ -40,6 +38,7 @@ namespace Multichoice_project.Areas.Admin.Controllers
 
             return Redirect("/Admin/User/AllUser");
         }
+        [HttpPost]
         public IActionResult EditUser(User user)
         {
             if (user.RoleName == null)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Multichoice_project.Core;
 using Multichoice_project.Models;
 using Multichoice_project.Persistence;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Multichoice_project.Controllers
 {
     public class TestController : Controller
     {
-        UnitOfWork _UnitOfwork;
-        
-        public TestController(Multichoise_DBContext dbcontext)
+        private readonly IUnitOfWork _UnitOfwork;
+
+        public TestController(IUnitOfWork unitOfWork)
         {
-            _UnitOfwork = new UnitOfWork(dbcontext);
+            _UnitOfwork = unitOfWork;
             
         }
         public string RemoveVietnameseTone(string text)
