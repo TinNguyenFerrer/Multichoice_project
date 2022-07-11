@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews();
 
 //builder.Services.AddSession();
 builder.Services.AddDbContext<Multichoise_DBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
-
+//dddddđ
 //Register Service 
 builder.Services.AddRepository();
 // Register MemoryCache
