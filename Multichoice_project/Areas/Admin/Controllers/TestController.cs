@@ -42,8 +42,16 @@ namespace Multichoice_project.Areas.Admin.Controllers
             ViewData["Subject"] = _unitOfWork.SubjectRepository.GetAll().ToList();
             return View();
         }
-        [HttpPost]
 
+        public IActionResult DeleteTest(int id)
+        {
+
+            _unitOfWork.TestRepository.Delete(id);
+            _unitOfWork.SaveChange();
+            return RedirectToAction(nameof(AllTest));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> SaveTest()
         {
 
