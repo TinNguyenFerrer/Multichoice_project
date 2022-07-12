@@ -65,7 +65,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//Save Reques
+//Save Request
 app.Use((context, next) =>
 {
     context.Request.EnableBuffering();
