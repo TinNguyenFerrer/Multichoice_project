@@ -35,10 +35,25 @@ namespace Multichoice_project.Controllers
             var datatest = _unitOfwork.TestRepository.GetByID(id);
             TempData["IdTest"] = id;
 
-
+            
             var dataquestion = (from ques in _unitOfwork.QuestionRepository.GetAll()
                                 where ques.TestId == datatest.Id
                                 select ques).ToList();
+
+            //========--------Dao cua hoi--------============
+            List<Question> Listdataquestions = new List<Question>();
+            var k = dataquestion.Count;
+            for (int i = 0;i< k; i++)
+            {
+                Random rnd = new Random();
+                int t = rnd.Next(dataquestion.Count);
+                Listdataquestions.Add(dataquestion[t]);
+                dataquestion.RemoveAt(t);
+            }
+            dataquestion.Clear();
+            dataquestion.AddRange(Listdataquestions);
+
+
             if (dataquestion.Any() && datatest != null)
             {
                 //==============-----Caching Memory----=====================
