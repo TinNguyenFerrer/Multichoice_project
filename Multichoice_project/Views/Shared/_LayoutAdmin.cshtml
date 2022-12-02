@@ -66,15 +66,15 @@
                                         <div class="list-group-item list-group-item-action">
                                             <div class="d-flex align-items-center text-nowrap mb-2">
                                                 <i class="gd-info-alt icon-text text-primary mr-2"></i>
-                                                <h6 class="font-weight-semi-bold mb-0">New Update</h6>
+                                                <h6 class="font-weight-semi-bold mb-0">Non</h6>
                                                 <span class="list-group-item-date text-muted ml-auto">just now</span>
                                             </div>
                                             <p class="mb-0">
-                                                Order <strong>#10000</strong> has been updated.
+                                                ....
                                             </p>
                                             <a class="list-group-item-closer text-muted" href="#"><i class="gd-close"></i></a>
                                         </div>
-                                        <div class="list-group-item list-group-item-action">
+                                        @*<div class="list-group-item list-group-item-action">
                                             <div class="d-flex align-items-center text-nowrap mb-2">
                                                 <i class="gd-info-alt icon-text text-primary mr-2"></i>
                                                 <h6 class="font-weight-semi-bold mb-0">New Update</h6>
@@ -84,7 +84,7 @@
                                                 Order <strong>#10001</strong> has been updated.
                                             </p>
                                             <a class="list-group-item-closer text-muted" href="#"><i class="gd-close"></i></a>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -102,21 +102,21 @@
 
                         <ul id="profileMenu" class="unfold unfold-user unfold-light unfold-top unfold-centered position-absolute pt-2 pb-1 mt-4 unfold-css-animation unfold-hidden fadeOut" aria-labelledby="profileMenuInvoker" style="animation-duration: 300ms;">
                             <li class="unfold-item">
-                                <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
-                                    <span class="unfold-item-icon mr-3">
-                                        <i class="gd-user"></i>
-                                    </span>
-                                    My Profile
-                                </a>
-                            </li>
-                            <li class="unfold-item unfold-item-has-divider">
-                                <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
+                                <a class="unfold-link d-flex align-items-center text-nowrap" href="/Admin/Home/Logout">
                                     <span class="unfold-item-icon mr-3">
                                         <i class="gd-power-off"></i>
                                     </span>
                                     Sign Out
                                 </a>
                             </li>
+                            @*<li class="unfold-item unfold-item-has-divider">
+                                <a class="unfold-link d-flex align-items-center text-nowrap" href="/Admin/Logout">
+                                    <span class="unfold-item-icon mr-3">
+                                        <i class="gd-user"></i>
+                                    </span>
+                                    Sign Out
+                                </a>
+                            </li>*@
                         </ul>
                     </div>
                     <!-- End User Avatar -->
@@ -131,7 +131,7 @@
         <aside id="sidebar" class="js-custom-scroll side-nav">
             <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
                 <!-- Title -->
-                <li class="sidebar-heading h6">Dashboard</li>
+                <li class="sidebar-heading h6">Home Pape</li>
                 <!-- End Title -->
                 <!-- Dashboard -->
                 <li class="side-nav-menu-item @ViewData["Dashboard"]">
@@ -139,7 +139,7 @@
                         <span class="side-nav-menu-icon d-flex mr-3">
                             <i class="gd-dashboard"></i>
                         </span>
-                        <span class="side-nav-fadeout-on-closed media-body">Dashboard</span>
+                        <span class="side-nav-fadeout-on-closed media-body">Home Pape</span>
                     </a>
                 </li>
                 <!-- End Dashboard -->

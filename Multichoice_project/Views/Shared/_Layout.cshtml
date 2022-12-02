@@ -73,12 +73,21 @@
                     </ul>
                 </div>
                 <div class="account-box">
-                    <div class="user-logged" onclick=" window.location='/Home/Login'">
-                        <h6>@ViewData["UserName"] </h6>
-                        <img src="/img/user_avata/UnLogin.jpg" class="rounded-cricle" alt="Circular Image" />
-                    </div>
+                    @if (@ViewData["UserName"] == "Đăng nhập!")
+                    {
+                        <div class="user-logged" onclick=" window.location='/Home/Login'">
+                            <h6>@ViewData["UserName"] </h6>
+                            <img src="/img/user_avata/UnLogin.jpg" class="rounded-cricle" alt="Circular Image" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="user-logged" onclick=" window.location='/Home/Logout'">
+                            <h6>@ViewData["UserName"] </h6>
+                            <img src="/img/user_avata/UnLogin.jpg" class="rounded-cricle" alt="Circular Image" />
+                        </div>
+                    }
                 </div>
-
 
             </nav>
 

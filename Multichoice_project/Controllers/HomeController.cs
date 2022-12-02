@@ -75,6 +75,13 @@ namespace Multichoice_project.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("IdUser");
+            return RedirectToAction(nameof(Index));
+        }
+            [HttpGet]
         public IActionResult Login()
         {
             return View();

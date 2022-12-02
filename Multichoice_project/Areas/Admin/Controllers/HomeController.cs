@@ -107,8 +107,14 @@ namespace Multichoice_project.Areas.Admin.Controllers
                               select result).Distinct().ToList();
             return View();
         }
-        
-        
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserNameAd");
+            HttpContext.Session.Remove("IdUserAd");
+            return RedirectPermanent("/Admin/Home/Login");
+        }
         public IActionResult Login()
         {
             return View();
